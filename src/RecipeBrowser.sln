@@ -3,7 +3,31 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34723.18
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecipeBrowser.Core", "RecipeBrowser.Core\RecipeBrowser.Core.csproj", "{221170BC-1CAE-4812-A75B-6BE02C685D34}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecipeBrowser.Repos", "RecipeBrowser.Repos\RecipeBrowser.Repos.csproj", "{09758978-2C2A-4438-8FFD-17BE2580BDD3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecipeBrowser.WebUI", "RecipeBrowser.WebUI\RecipeBrowser.WebUI.csproj", "{2B353B33-378E-448F-BC2C-EFF1B2A6D2DB}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{221170BC-1CAE-4812-A75B-6BE02C685D34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{221170BC-1CAE-4812-A75B-6BE02C685D34}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{221170BC-1CAE-4812-A75B-6BE02C685D34}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{221170BC-1CAE-4812-A75B-6BE02C685D34}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09758978-2C2A-4438-8FFD-17BE2580BDD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09758978-2C2A-4438-8FFD-17BE2580BDD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09758978-2C2A-4438-8FFD-17BE2580BDD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09758978-2C2A-4438-8FFD-17BE2580BDD3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B353B33-378E-448F-BC2C-EFF1B2A6D2DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B353B33-378E-448F-BC2C-EFF1B2A6D2DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B353B33-378E-448F-BC2C-EFF1B2A6D2DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B353B33-378E-448F-BC2C-EFF1B2A6D2DB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
