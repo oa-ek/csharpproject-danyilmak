@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 
 namespace RecipeBrowser.Core.Entities
 {
-    public class RecipeLink : IEntity<Guid>
+    public class Review
     {
         public Guid Id { get; set; } = Guid.NewGuid();
-        public string Name { get; set; }
-        public string Url { get; set; }
+        public string? Title {  get; set; }
 
-        public Recipe? Recipe { get; set; }
+        [ForeignKey(nameof(User))]
+        public Guid? UserId { get; set; }
+
         [ForeignKey(nameof(Recipe))]
         public Guid? RecipeId { get; set; }
     }

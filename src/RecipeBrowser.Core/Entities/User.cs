@@ -9,8 +9,7 @@ namespace RecipeBrowser.Core.Entities
 {
     public class User : IdentityUser<Guid>, IEntity<Guid>
     {
-        public string? Username { get; set; }
-        public virtual ICollection<Recipe> AdminRecipes { get; set; } = new HashSet<Recipe>();
-        public virtual ICollection<RecipeItem> PeopleRecipes { get; set; } = new HashSet<RecipeItem>();
+        public string? Fullname { get; set; }
+        public virtual ICollection<Recipe> UserRecipes { get; set; } = new HashSet<Recipe>();
     }
 }

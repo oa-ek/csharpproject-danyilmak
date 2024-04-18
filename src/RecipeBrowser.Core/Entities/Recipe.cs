@@ -13,11 +13,12 @@ namespace RecipeBrowser.Core.Entities
         public string? Title { get; set; } = string.Empty;
         public string? Ingredients { get; set; } = string.Empty;
         public string? Instructions { get; set; } = string.Empty;
-        public string? Collections {  get; set; } = string.Empty;
-        public string? Comment {  get; set; } = string.Empty;
-        public User? Admin { get; set; }
+        public virtual ICollection<Collection> Collections {  get; set; }
+        public virtual ICollection<Review> Reviews{  get; set; }
+        public string? ImagePath { get; set; } = "/img/no_photo.jpg";
+        public User? Users { get; set; }
 
-        [ForeignKey(nameof(Admin))]
-        public Guid? AdminId { get; set; }
+        [ForeignKey(nameof(User))]
+        public Guid? UserId { get; set; }
     }
 }

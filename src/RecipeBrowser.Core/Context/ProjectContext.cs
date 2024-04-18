@@ -13,22 +13,8 @@ namespace RecipeBrowser.Core.Context
         {
         }
 
-        protected override void OnModelCreating(ModelBuilder builder)
-        {
-            builder
-                .Entity<RecipeItem>()
-                .HasMany(x => x.Peoples)
-                .WithMany(x => x.PeopleRecipes);
-
-            builder.Seed();
-
-            base.OnModelCreating(builder);
-        }
         public DbSet<Recipe> Recipes => Set<Recipe>();
-        public DbSet<RecipeItem> RecipeItems => Set<RecipeItem>();
-        public DbSet<RecipeItemStatus> RecipeItemStatuses => Set<RecipeItemStatus>();
-        public DbSet<RecipeLink> RecipeLinks => Set<RecipeLink>();
-        public DbSet<RecipeApproveQuery> ApproveQueries => Set<RecipeApproveQuery>();
-        public DbSet<RecipeAccessQuery> AccessQueries => Set<RecipeAccessQuery>();
+        public DbSet<Review> Reviews => Set<Review>();
+        public DbSet<Collection> Collections => Set<Collection>();
     }
 }
