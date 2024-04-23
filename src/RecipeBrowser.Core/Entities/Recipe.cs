@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -20,5 +21,8 @@ namespace RecipeBrowser.Core.Entities
 
         [ForeignKey(nameof(User))]
         public Guid? UserId { get; set; }
+
+        [NotMapped]
+        public IFormFile? ImageFile { get; set; }
     }
 }
