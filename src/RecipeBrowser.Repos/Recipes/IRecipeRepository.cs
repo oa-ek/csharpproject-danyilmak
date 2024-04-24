@@ -1,4 +1,4 @@
-﻿using RecipeBrowser.Core.Entities;
+﻿using RecipeBrowser.Core.Entities.Recipes;
 using RecipeBrowser.Repos.Common;
 using System;
 using System.Collections.Generic;

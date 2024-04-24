@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RecipeBrowser.Core.Entities
+namespace RecipeBrowser.Core.Entities.Recipes
 {
     public class Recipe : IEntity<Guid>
     {
@@ -14,8 +14,8 @@ namespace RecipeBrowser.Core.Entities
         public string? Title { get; set; } = string.Empty;
         public string? Ingredients { get; set; } = string.Empty;
         public string? Instructions { get; set; } = string.Empty;
-        public virtual ICollection<Collection> Collections {  get; set; }
-        public virtual ICollection<Review> Reviews{  get; set; }
+        public virtual ICollection<Collection> Collections { get; set; }
+        public virtual ICollection<Review> Reviews { get; set; }
         public string? ImagePath { get; set; } = "/img/no_photo.jpg";
         public User? Users { get; set; }
 

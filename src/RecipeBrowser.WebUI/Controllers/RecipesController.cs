@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis;
-using RecipeBrowser.Core.Entities;
+using RecipeBrowser.Core.Entities.Recipes;
 using RecipeBrowser.Repos.Recipes;
 using RecipeBrowser.Repos.Users;
 using RecipeBrowser.WebUI.Helpers;

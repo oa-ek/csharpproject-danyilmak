@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis;
-using RecipeBrowser.Core.Entities;
+using RecipeBrowser.Core.Entities.Recipes;
 using RecipeBrowser.Repos.Common;
 using RecipeBrowser.WebUI.Models;
 using System.Diagnostics;

@@ -189,7 +189,7 @@ namespace RecipeBrowser.Core.Migrations
                     b.ToTable("Collections");
                 });
 
-            modelBuilder.Entity("RecipeBrowser.Core.Entities.Recipe", b =>
+            modelBuilder.Entity("RecipeBrowser.Core.Entities.Recipes.Recipe", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -316,7 +316,7 @@ namespace RecipeBrowser.Core.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("RecipeBrowser.Core.Entities.Recipe", null)
+                    b.HasOne("RecipeBrowser.Core.Entities.Recipes.Recipe", null)
                         .WithMany()
                         .HasForeignKey("RecipesId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -374,7 +374,7 @@ namespace RecipeBrowser.Core.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("RecipeBrowser.Core.Entities.Recipe", b =>
+            modelBuilder.Entity("RecipeBrowser.Core.Entities.Recipes.Recipe", b =>
                 {
                     b.HasOne("RecipeBrowser.Core.Entities.User", "Users")
                         .WithMany("UserRecipes")
@@ -385,12 +385,12 @@ namespace RecipeBrowser.Core.Migrations
 
             modelBuilder.Entity("RecipeBrowser.Core.Entities.Review", b =>
                 {
-                    b.HasOne("RecipeBrowser.Core.Entities.Recipe", null)
+                    b.HasOne("RecipeBrowser.Core.Entities.Recipes.Recipe", null)
                         .WithMany("Reviews")
                         .HasForeignKey("RecipeId");
                 });
 
-            modelBuilder.Entity("RecipeBrowser.Core.Entities.Recipe", b =>
+            modelBuilder.Entity("RecipeBrowser.Core.Entities.Recipes.Recipe", b =>
                 {
                     b.Navigation("Reviews");
                 });

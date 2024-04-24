@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using RecipeBrowser.Core.Entities;
+using RecipeBrowser.Core.Entities.Recipes;
 using System.Reflection.Emit;
 
 namespace RecipeBrowser.Core.Context
