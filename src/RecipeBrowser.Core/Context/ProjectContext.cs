@@ -13,6 +13,13 @@ namespace RecipeBrowser.Core.Context
             : base(options)
         {
         }
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+
+            builder.Seed();
+
+            base.OnModelCreating(builder);
+        }
 
         public DbSet<Recipe> Recipes => Set<Recipe>();
         public DbSet<Review> Reviews => Set<Review>();

@@ -10,7 +10,7 @@ namespace RecipeBrowser.Core.Entities
 {
     public class User : IdentityUser<Guid>, IEntity<Guid>
     {
-        public string? Fullname { get; set; }
+        public string? FullName { get; set; }
         public virtual ICollection<Recipe> UserRecipes { get; set; } = new HashSet<Recipe>();
     }
 }

@@ -31,7 +31,7 @@ namespace RecipeBrowser.Repos.Users
             {
                 Id = Guid.NewGuid(),
                 UserName = model.Email,
-                Fullname = model.Name,
+                FullName = model.Name,
                 EmailConfirmed = false,
                 NormalizedUserName = model.Email.ToUpper(),
                 NormalizedEmail = model.Email.ToUpper(),
@@ -52,7 +52,7 @@ namespace RecipeBrowser.Repos.Users
                 {
                     Id = user.Id,
                     Email = user.Email,
-                    FullName = user.Fullname,
+                    FullName = user.FullName,
                     Roles = new List<IdentityRole<Guid>>()
                 };
 
@@ -79,8 +79,8 @@ namespace RecipeBrowser.Repos.Users
                 user.NormalizedEmail = model.Email.ToUpper();
             }
 
-            if (user.Fullname != model.FullName)
-                user.Fullname = model.FullName;
+            if (user.FullName != model.FullName)
+                user.FullName = model.FullName;
 
             if (user.EmailConfirmed != model.IsEmailConfirmed)
                 user.EmailConfirmed = model.IsEmailConfirmed;
@@ -107,7 +107,7 @@ namespace RecipeBrowser.Repos.Users
             {
                 Id = user.Id,
                 Email = user.Email,
-                FullName = user.Fullname,
+                FullName = user.FullName,
                 IsEmailConfirmed = user.EmailConfirmed,
                 Roles = new List<IdentityRole<Guid>>()
             };

@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace RecipeBrowser.Core.Migrations
 {
     /// <inheritdoc />
@@ -30,7 +32,7 @@ namespace RecipeBrowser.Core.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Fullname = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -232,6 +234,33 @@ namespace RecipeBrowser.Core.Migrations
                         column: x => x.RecipeId,
                         principalTable: "Recipes",
                         principalColumn: "Id");
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { new Guid("37f02e99-2ac9-4fec-b807-0d1783e24255"), "37f02e99-2ac9-4fec-b807-0d1783e24255", "User", "USER" },
+                    { new Guid("e028a871-f98b-426d-97c5-5a945567d743"), "e028a871-f98b-426d-97c5-5a945567d743", "Admin", "ADMIN" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FullName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[,]
+                {
+                    { new Guid("8b5830ec-7a22-4b6e-95fe-66157fb56fab"), 0, "a0f4a5bc-adfd-42ff-a1ff-12d5a370fc8c", "admin@recipes.daniil.page", true, "Даниїл Максимчук", false, null, "ADMIN@RECIPES.DANIIL.PAGE", "ADMIN@RECIPES.DANIIL.PAGE", "AQAAAAIAAYagAAAAECibdX+BFwvCsW7Ta6dYfH+uBKGZAk/mOE/6cz/80Yxt+XqqdTYH4durYorSJk6Z7g==", null, false, "c287daf6-b526-42a5-a4fc-22a509432f64", false, "admin@recipes.daniil.page" },
+                    { new Guid("a1231b02-c53a-4222-a4d7-3930390410ce"), 0, "e9e6209a-b098-4f3a-9f07-37fa3baab9b0", "user@recipes.daniil.page", true, "Ігор Куренко", false, null, "USER@RECIPES.DANIIL.PAGE", "USER@RECIPES.DANIIL.PAGE", "AQAAAAIAAYagAAAAEIFR5cItLXz053EfRfEi7tlurW1nt2ziGVT4dlpxQHvycRaUOW/bp03BwJZexDKplg==", null, false, "220c4d13-306d-4579-9a3f-442cb9a71f28", false, "user@recipes.daniil.page" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[,]
+                {
+                    { new Guid("37f02e99-2ac9-4fec-b807-0d1783e24255"), new Guid("8b5830ec-7a22-4b6e-95fe-66157fb56fab") },
+                    { new Guid("e028a871-f98b-426d-97c5-5a945567d743"), new Guid("8b5830ec-7a22-4b6e-95fe-66157fb56fab") }
                 });
 
             migrationBuilder.CreateIndex(
