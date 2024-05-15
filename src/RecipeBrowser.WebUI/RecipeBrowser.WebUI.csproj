@@ -25,4 +25,13 @@
     <ProjectReference Include="..\RecipeBrowser.Repos\RecipeBrowser.Repos.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="wwwroot\theme\assets\css\style.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\theme\assets\vendor\bootstrap\css\bootstrap.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>
