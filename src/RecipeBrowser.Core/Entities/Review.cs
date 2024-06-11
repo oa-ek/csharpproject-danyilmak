@@ -11,7 +11,7 @@ namespace RecipeBrowser.Core.Entities
     public class Review
     {
         public Guid Id { get; set; } = Guid.NewGuid();
-        public string? Title {  get; set; }
+        public string? Desc {  get; set; }
 
         [ForeignKey(nameof(User))]
         public Guid? UserId { get; set; }

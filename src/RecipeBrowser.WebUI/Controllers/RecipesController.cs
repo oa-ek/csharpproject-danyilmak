@@ -41,6 +41,10 @@ namespace RecipeBrowser.WebUI.Controllers
         [HttpGet]
         public async Task<IActionResult> Create()
         {
+            ViewBag.Users = (await _userRepository
+                .GetAllAsync())
+                .Select(x => new SelectListItem { Text = x.FullName, Value = x.Id.ToString() }).ToList();
+
             return View(new Recipe());
         }
 

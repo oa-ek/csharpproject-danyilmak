@@ -22,6 +22,8 @@
                     <th>Назва рецепту</th>
                     <th>Інгредієнти</th>
                     <th>Інструкції</th>
+                    <th>За авторством</th>
+                    <th>Взаємодія</th>
                 </tr>
             </thead>
             <tbody>
@@ -30,6 +32,15 @@
                     <tr>
                         <td>
                             Рецепт: <strong>@p.Title</strong><br />
+                        </td>
+                        <td>
+                            <p>@p.Ingredients</p>
+                        </td>
+                        <td>
+                            <p>@p.Instructions</p>
+                        </td>
+                        <td>
+                            <strong>@p.Users</strong>
                         </td>
                         <td>
                             <a href="/recipes/details/@p.Id" class="btn btn-primary">Детально</a>
