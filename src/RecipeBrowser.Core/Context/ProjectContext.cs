@@ -19,6 +19,11 @@ namespace RecipeBrowser.Core.Context
             builder.Seed();
 
             base.OnModelCreating(builder);
+            builder.Entity<Recipe>()
+        .HasOne(r => r.Users)
+        .WithMany()
+        .HasForeignKey(r => r.UserId)
+        .OnDelete(DeleteBehavior.Cascade);
         }
 
         public DbSet<Recipe> Recipes => Set<Recipe>();

@@ -9,11 +9,11 @@
 <table class="table table-bordered">
     <thead>
         <tr>
-            <th>Full Name</th>
-            <th>Email</th>
-            <th>Roles</th>
-            <th>Confirmed</th>
-            <th>Actions</th>
+            <th>Повне імя</th>
+            <th>Пошта</th>
+            <th>Роль</th>
+            <th>Підтверджено</th>
+            <th>Дії</th>
         </tr>
     </thead>
     <tbody>
@@ -27,7 +27,7 @@
                 <td><input class="form-check-input" @(u.IsEmailConfirmed ? "checked" : "") type="checkbox" disabled></td>
                 <td>
                     <a href="/user/edit/@u.Id" class="btn btn-warning">Edit</a>
-                    <a href="#" data-id="@u.Id" data-email="@u.Email" class="btn btn-danger btn-remove-user">Remove</a>
+                    <a href="#" data-id="@u.Id" data-email="@u.Email" class="btn btn-danger btn-remove-user">Видалити</a>
                 </td>
             </tr>
         }

@@ -1,0 +1,12 @@
+@using RecipeBrowser.Core.Entities
+@model Review
+
+<h1>Видалення відгуку: @Model.Text</h1>
+
+
+<form asp-action="Delete">
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.Id)
+
+    <button class="btn btn-primary" type="submit">Видалити</button>
+</form>

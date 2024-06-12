@@ -1,0 +1,42 @@
+﻿@using RecipeBrowser.Core.Entities
+@model Review
+@{
+    var types = ViewBag.Users as List<SelectListItem>;
+    var recipes = ViewBag.Recipes as List<SelectListItem>;
+}
+
+<h1>Редагування відгуку: @Model.Text</h1>
+
+
+<form asp-action="Edit" enctype="multipart/form-data">
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+
+    @Html.HiddenFor(model => model.Id)
+
+    <div data="mb-3">
+        @Html.DisplayNameFor(model => model.Rating)
+        @Html.TextBoxFor(model => model.Rating, new { @class = "form-control" })
+        <span asp-validation-for="Rating" class="text-danger" />
+    </div>
+
+    <select asp-for="UserId" asp-items="@(types)" id="x1" class="form-control">
+        <option value="0" selected="selected">- Оберіть користувача -</option>
+    </select>
+
+    <input type="hidden" asp-for="UserId" />
+
+    <select asp-for="RecipeId" asp-items="@(recipes)" id="x1" class="form-control">
+        <option value="0" selected="selected">- Оберіть рецепт -</option>
+    </select>
+
+    <input type="hidden" asp-for="RecipeId" />
+
+    <button class="btn btn-primary" type="submit">Зберегти</button>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

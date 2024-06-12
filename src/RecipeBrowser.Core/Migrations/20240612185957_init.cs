@@ -181,7 +181,9 @@ namespace RecipeBrowser.Core.Migrations
                     Ingredients = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Instructions = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ImagePath = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CollectionId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    UserId1 = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -190,31 +192,18 @@ namespace RecipeBrowser.Core.Migrations
                         name: "FK_Recipes_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Recipes_AspNetUsers_UserId1",
+                        column: x => x.UserId1,
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CollectionRecipe",
-                columns: table => new
-                {
-                    CollectionsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    RecipesId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CollectionRecipe", x => new { x.CollectionsId, x.RecipesId });
                     table.ForeignKey(
-                        name: "FK_CollectionRecipe_Collections_CollectionsId",
-                        column: x => x.CollectionsId,
+                        name: "FK_Recipes_Collections_CollectionId",
+                        column: x => x.CollectionId,
                         principalTable: "Collections",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_CollectionRecipe_Recipes_RecipesId",
-                        column: x => x.RecipesId,
-                        principalTable: "Recipes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -222,13 +211,19 @@ namespace RecipeBrowser.Core.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Text = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Rating = table.Column<double>(type: "float", nullable: true),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     RecipeId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Reviews", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Reviews_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Reviews_Recipes_RecipeId",
                         column: x => x.RecipeId,
@@ -241,8 +236,8 @@ namespace RecipeBrowser.Core.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { new Guid("37f02e99-2ac9-4fec-b807-0d1783e24255"), "37f02e99-2ac9-4fec-b807-0d1783e24255", "User", "USER" },
-                    { new Guid("e028a871-f98b-426d-97c5-5a945567d743"), "e028a871-f98b-426d-97c5-5a945567d743", "Admin", "ADMIN" }
+                    { new Guid("23166996-4f58-419b-bb89-a1ae8aaba3c5"), "23166996-4f58-419b-bb89-a1ae8aaba3c5", "User", "USER" },
+                    { new Guid("ff6a4558-2128-4b65-9269-298675ccbe34"), "ff6a4558-2128-4b65-9269-298675ccbe34", "Admin", "ADMIN" }
                 });
 
             migrationBuilder.InsertData(
@@ -250,8 +245,8 @@ namespace RecipeBrowser.Core.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FullName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { new Guid("8b5830ec-7a22-4b6e-95fe-66157fb56fab"), 0, "a0f4a5bc-adfd-42ff-a1ff-12d5a370fc8c", "admin@recipes.daniil.page", true, "Даниїл Максимчук", false, null, "ADMIN@RECIPES.DANIIL.PAGE", "ADMIN@RECIPES.DANIIL.PAGE", "AQAAAAIAAYagAAAAECibdX+BFwvCsW7Ta6dYfH+uBKGZAk/mOE/6cz/80Yxt+XqqdTYH4durYorSJk6Z7g==", null, false, "c287daf6-b526-42a5-a4fc-22a509432f64", false, "admin@recipes.daniil.page" },
-                    { new Guid("a1231b02-c53a-4222-a4d7-3930390410ce"), 0, "e9e6209a-b098-4f3a-9f07-37fa3baab9b0", "user@recipes.daniil.page", true, "Ігор Куренко", false, null, "USER@RECIPES.DANIIL.PAGE", "USER@RECIPES.DANIIL.PAGE", "AQAAAAIAAYagAAAAEIFR5cItLXz053EfRfEi7tlurW1nt2ziGVT4dlpxQHvycRaUOW/bp03BwJZexDKplg==", null, false, "220c4d13-306d-4579-9a3f-442cb9a71f28", false, "user@recipes.daniil.page" }
+                    { new Guid("62e1c035-0bca-4cc8-be12-741e71b94586"), 0, "fe96aeb6-c049-4287-ab3e-f5c3e6565d80", "admin@recipes.daniil.page", true, "Даниїл Максимчук", false, null, "ADMIN@RECIPES.DANIIL.PAGE", "ADMIN@RECIPES.DANIIL.PAGE", "AQAAAAIAAYagAAAAEGDvSOAb6WMtAL58nQkDV/M5AeozHgC9OSkvxGqG+hzaVih1nTWRkOdi8zGjgEs4bA==", null, false, "cb1722d2-4695-4ebf-8e59-be94bcafb971", false, "admin@recipes.daniil.page" },
+                    { new Guid("c6c47b20-98e4-47d7-8171-f2461006fcb6"), 0, "9d755b78-2f8d-4ddc-b36d-376cf5f469bb", "user@recipes.daniil.page", true, "Ігор Куренко", false, null, "USER@RECIPES.DANIIL.PAGE", "USER@RECIPES.DANIIL.PAGE", "AQAAAAIAAYagAAAAEDQ9cpkI+ec+G8dam6CVfhyhShZdfz8h4o4jXD33GkTQzIwUKqWO3Auud1fjkIguQw==", null, false, "0f96ba8d-1b22-4815-9023-2499118f8a64", false, "user@recipes.daniil.page" }
                 });
 
             migrationBuilder.InsertData(
@@ -259,8 +254,8 @@ namespace RecipeBrowser.Core.Migrations
                 columns: new[] { "RoleId", "UserId" },
                 values: new object[,]
                 {
-                    { new Guid("37f02e99-2ac9-4fec-b807-0d1783e24255"), new Guid("8b5830ec-7a22-4b6e-95fe-66157fb56fab") },
-                    { new Guid("e028a871-f98b-426d-97c5-5a945567d743"), new Guid("8b5830ec-7a22-4b6e-95fe-66157fb56fab") }
+                    { new Guid("23166996-4f58-419b-bb89-a1ae8aaba3c5"), new Guid("62e1c035-0bca-4cc8-be12-741e71b94586") },
+                    { new Guid("ff6a4558-2128-4b65-9269-298675ccbe34"), new Guid("62e1c035-0bca-4cc8-be12-741e71b94586") }
                 });
 
             migrationBuilder.CreateIndex(
@@ -303,9 +298,9 @@ namespace RecipeBrowser.Core.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CollectionRecipe_RecipesId",
-                table: "CollectionRecipe",
-                column: "RecipesId");
+                name: "IX_Recipes_CollectionId",
+                table: "Recipes",
+                column: "CollectionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Recipes_UserId",
@@ -313,9 +308,19 @@ namespace RecipeBrowser.Core.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Recipes_UserId1",
+                table: "Recipes",
+                column: "UserId1");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Reviews_RecipeId",
                 table: "Reviews",
                 column: "RecipeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reviews_UserId",
+                table: "Reviews",
+                column: "UserId");
         }
 
         /// <inheritdoc />
@@ -337,22 +342,19 @@ namespace RecipeBrowser.Core.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "CollectionRecipe");
-
-            migrationBuilder.DropTable(
                 name: "Reviews");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Collections");
-
-            migrationBuilder.DropTable(
                 name: "Recipes");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Collections");
         }
     }
 }

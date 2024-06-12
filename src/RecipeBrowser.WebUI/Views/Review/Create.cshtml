@@ -1,0 +1,61 @@
+﻿@using RecipeBrowser.Core.Entities.Recipes
+﻿@using RecipeBrowser.Core.Entities
+@model Review
+
+@{
+    var types = ViewBag.Users as List<SelectListItem>;
+    var recipes = ViewBag.Recipes as List<SelectListItem>;
+}
+
+<h1>Новий відгук</h1>
+
+
+<form asp-action="Create" enctype="multipart/form-data">
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+
+    <div class="row">
+        <div class="col-md-6">
+            <div data="mb-3">
+                @Html.DisplayNameFor(model => model.Text)
+                @Html.TextBoxFor(model => model.Text, new { @class = "form-control" })
+                <span asp-validation-for="Text" class="text-danger" />
+            </div>
+            <div data="mb-3">
+                @Html.DisplayNameFor(model => model.Rating)
+                @Html.TextBoxFor(model => model.Rating, new { @class = "form-control" })
+                <span asp-validation-for="Rating" class="text-danger" />
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group mt-3">
+                @Html.DisplayNameFor(model => model.Users)
+                <select asp-for="UserId" asp-items="@(types)" id="x1" class="form-control">
+                    <option value="0" selected="selected">- Оберіть користувача -</option>
+                </select>
+
+                <input type="hidden" asp-for="UserId" />
+            </div>
+            <div class="form-group mt-3">
+                @Html.DisplayNameFor(model => model.Recipes)
+                <select asp-for="RecipeId" asp-items="@(recipes)" id="x1" class="form-control">
+                    <option value="0" selected="selected">- Оберіть рецепт -</option>
+                </select>
+
+                <input type="hidden" asp-for="RecipeId" />
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <button class="btn btn-primary btn-block" style="width: 100% !important" type="submit">Зберегти</button>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

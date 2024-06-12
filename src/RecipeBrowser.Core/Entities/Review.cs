@@ -8,10 +8,13 @@ using RecipeBrowser.Core.Entities.Recipes;
 
 namespace RecipeBrowser.Core.Entities
 {
-    public class Review
+    public class Review : IEntity<Guid>
     {
         public Guid Id { get; set; } = Guid.NewGuid();
-        public string? Desc {  get; set; }
+        public string? Text {  get; set; }
+        public double? Rating { get; set; }
+        public User? Users { get; set; }
+        public Recipe? Recipes { get; set; }
 
         [ForeignKey(nameof(User))]
         public Guid? UserId { get; set; }

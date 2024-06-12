@@ -12,8 +12,8 @@ using RecipeBrowser.Core.Context;
 namespace RecipeBrowser.Core.Migrations
 {
     [DbContext(typeof(ProjectContext))]
-    [Migration("20240611174315_init2")]
-    partial class init2
+    [Migration("20240612185957_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -55,15 +55,15 @@ namespace RecipeBrowser.Core.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("63324957-3702-40bf-9595-fb5471f6bcb0"),
-                            ConcurrencyStamp = "63324957-3702-40bf-9595-fb5471f6bcb0",
+                            Id = new Guid("ff6a4558-2128-4b65-9269-298675ccbe34"),
+                            ConcurrencyStamp = "ff6a4558-2128-4b65-9269-298675ccbe34",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = new Guid("ee0b7f24-a4bc-4c35-bfe5-32ac5b4daa9f"),
-                            ConcurrencyStamp = "ee0b7f24-a4bc-4c35-bfe5-32ac5b4daa9f",
+                            Id = new Guid("23166996-4f58-419b-bb89-a1ae8aaba3c5"),
+                            ConcurrencyStamp = "23166996-4f58-419b-bb89-a1ae8aaba3c5",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -157,13 +157,13 @@ namespace RecipeBrowser.Core.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = new Guid("17e70be7-b3cb-4ecd-b749-4dc8ea1a7fc9"),
-                            RoleId = new Guid("63324957-3702-40bf-9595-fb5471f6bcb0")
+                            UserId = new Guid("62e1c035-0bca-4cc8-be12-741e71b94586"),
+                            RoleId = new Guid("ff6a4558-2128-4b65-9269-298675ccbe34")
                         },
                         new
                         {
-                            UserId = new Guid("17e70be7-b3cb-4ecd-b749-4dc8ea1a7fc9"),
-                            RoleId = new Guid("ee0b7f24-a4bc-4c35-bfe5-32ac5b4daa9f")
+                            UserId = new Guid("62e1c035-0bca-4cc8-be12-741e71b94586"),
+                            RoleId = new Guid("23166996-4f58-419b-bb89-a1ae8aaba3c5")
                         });
                 });
 
@@ -229,11 +229,16 @@ namespace RecipeBrowser.Core.Migrations
                     b.Property<Guid?>("UserId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("UserId1")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CollectionId");
 
                     b.HasIndex("UserId");
+
+                    b.HasIndex("UserId1");
 
                     b.ToTable("Recipes");
                 });
@@ -244,16 +249,23 @@ namespace RecipeBrowser.Core.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Desc")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<double?>("Rating")
+                        .HasColumnType("float");
 
                     b.Property<Guid?>("RecipeId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Text")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("RecipeId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Reviews");
                 });
@@ -329,35 +341,35 @@ namespace RecipeBrowser.Core.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("17e70be7-b3cb-4ecd-b749-4dc8ea1a7fc9"),
+                            Id = new Guid("62e1c035-0bca-4cc8-be12-741e71b94586"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "52f3fec8-51e7-4a42-aee2-729fd06df3ed",
+                            ConcurrencyStamp = "fe96aeb6-c049-4287-ab3e-f5c3e6565d80",
                             Email = "admin@recipes.daniil.page",
                             EmailConfirmed = true,
                             FullName = "Даниїл Максимчук",
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@RECIPES.DANIIL.PAGE",
                             NormalizedUserName = "ADMIN@RECIPES.DANIIL.PAGE",
-                            PasswordHash = "AQAAAAIAAYagAAAAEHv4VsWWhRViZqu5ITXhWdpUQ3bFXOX5nW+ggYxobAmI3LRg6dDqLxL29n+0m+jxvA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGDvSOAb6WMtAL58nQkDV/M5AeozHgC9OSkvxGqG+hzaVih1nTWRkOdi8zGjgEs4bA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "fd5859f9-39bb-4222-8f78-b01bba8865af",
+                            SecurityStamp = "cb1722d2-4695-4ebf-8e59-be94bcafb971",
                             TwoFactorEnabled = false,
                             UserName = "admin@recipes.daniil.page"
                         },
                         new
                         {
-                            Id = new Guid("fe0e1aab-ccac-4263-a6af-a6b3a5c39c84"),
+                            Id = new Guid("c6c47b20-98e4-47d7-8171-f2461006fcb6"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "20ab6896-430d-4118-ac97-ca3186c6b9e5",
+                            ConcurrencyStamp = "9d755b78-2f8d-4ddc-b36d-376cf5f469bb",
                             Email = "user@recipes.daniil.page",
                             EmailConfirmed = true,
                             FullName = "Ігор Куренко",
                             LockoutEnabled = false,
                             NormalizedEmail = "USER@RECIPES.DANIIL.PAGE",
                             NormalizedUserName = "USER@RECIPES.DANIIL.PAGE",
-                            PasswordHash = "AQAAAAIAAYagAAAAEK0esb/wlAJInjBFxz+KQX16G/NczcMDZQ3ssNrgcngXrgG2eZUvWRBma6qM316GuA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEDQ9cpkI+ec+G8dam6CVfhyhShZdfz8h4o4jXD33GkTQzIwUKqWO3Auud1fjkIguQw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "5d941871-fa4a-4908-ab42-f415625bc4ec",
+                            SecurityStamp = "0f96ba8d-1b22-4815-9023-2499118f8a64",
                             TwoFactorEnabled = false,
                             UserName = "user@recipes.daniil.page"
                         });
@@ -421,8 +433,28 @@ namespace RecipeBrowser.Core.Migrations
                         .HasForeignKey("CollectionId");
 
                     b.HasOne("RecipeBrowser.Core.Entities.User", "Users")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("RecipeBrowser.Core.Entities.User", null)
                         .WithMany("UserRecipes")
+                        .HasForeignKey("UserId1");
+
+                    b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("RecipeBrowser.Core.Entities.Review", b =>
+                {
+                    b.HasOne("RecipeBrowser.Core.Entities.Recipes.Recipe", "Recipes")
+                        .WithMany()
+                        .HasForeignKey("RecipeId");
+
+                    b.HasOne("RecipeBrowser.Core.Entities.User", "Users")
+                        .WithMany()
                         .HasForeignKey("UserId");
+
+                    b.Navigation("Recipes");
 
                     b.Navigation("Users");
                 });

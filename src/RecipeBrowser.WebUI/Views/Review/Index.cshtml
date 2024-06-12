@@ -1,0 +1,50 @@
+@using RecipeBrowser.Core.Entities
+@using RecipeBrowser.WebUI.Controllers
+@using RecipeBrowser.WebUI.Helpers
+@model List<Review>
+
+@{
+    ViewData["Title"] = "Відгуки";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<a href="/review/create" class="btn btn-success float-end">Додати відгук</a>
+<div class="float-end" style="width:10px"></div>
+
+<h2 class="mt-3 mb-3">@ViewData["Title"]</h2>
+
+<div class="card">
+    <div class="card-body">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Відгук</th>
+                    <th>Оцінка</th>
+                    <th>Рецепт</th>
+                    <th>Дії</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var p in Model)
+                {
+                    <tr>
+                        <td>
+                            <strong>@p.Text</strong><br />
+                        </td>
+                        <td>
+                            <p>@p.Rating</p>
+                        </td>
+                        <td>
+                            <strong>@p.Recipes</strong>
+                        </td>
+                        <td>
+                            <a href="/review/details/@p.Id" class="btn btn-primary">Детально</a>
+                            <a href="/review/edit/@p.Id" class="btn btn-warning">Редагувати</a>
+                            <a href="/review/delete/@p.Id" class="btn btn-danger">Видалити</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

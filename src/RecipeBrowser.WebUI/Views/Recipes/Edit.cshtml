@@ -1,5 +1,8 @@
 ﻿﻿@using RecipeBrowser.Core.Entities.Recipes
 @model Recipe
+@{
+    var types = ViewBag.Users as List<SelectListItem>;
+}
 
 <h1>Редагування рецепту: @Model.Title</h1>
 
@@ -27,6 +30,11 @@
         <input asp-for="ImageFile" accept="image/*" />
         <span asp-validation-for="ImageFile" class="text-danger"></span>
     </div>
+    <select asp-for="UserId" asp-items="@(types)" id="x1" class="form-control">
+        <option value="0" selected="selected">- Оберіть користувача -</option>
+    </select>
+
+    <input type="hidden" asp-for="UserId" />
 
     <button class="btn btn-primary" type="submit">Зберегти</button>
 </form>
