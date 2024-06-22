@@ -1,0 +1,89 @@
+﻿@using RecipeBrowser.Core.Entities
+@model List<CookingType>
+
+@{
+    ViewData["Title"] = "Способи приготування";
+}
+<div class="container-fluid px-5 py-3">
+
+    <a href="/CookingType/create" class="btn btn-success float-end">Додати</a>
+
+    <h2 class="mt-3 mb-3">@ViewData["Title"]</h2>
+
+    <table class="table table-bordered text-white">
+        <thead>
+            <tr class="text-center align-middle">
+                <th>Назва</th>
+                <th>Дії</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var m in Model)
+            {
+                <tr class="text-center align-middle">
+                    <td class="text-center align-middle">
+                        <strong>@m.Title</strong>
+                    </td>
+
+                    <td class="text-center d-flex justify-content-evenly">
+                        <a href="/CookingType/edit/@m.Id" class="btn btn-warning w-25">Редагувати</a>
+                        <a href="#" data-id="@m.Id" data-name="@m.Title" class="btn btn-danger btn-remove w-25">Видалити</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<!--Modal for delete-->
+<div class="modal" tabindex="-1" id="modalQuestion">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Видалення</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Чи справді Ви бажаєте видалити спосіб приготування <strong class="selectedName">-</strong>?</p>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn-primary btn btn-remove-approve w-25">Так</a>
+                <button type="button" class="btn btn-secondary w-25" data-bs-dismiss="modal">Скасувати</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(function () {
+            let selected_id = "";
+            let select_name = "";
+            let row = null;
+
+            $(".btn-remove").click(function () {
+
+                row = $(this).closest("tr");
+                selected_id = $(this).attr("data-id");
+                selected_name = $(this).attr("data-name");
+                $(".selectedName").html(selected_name);
+                $("#modalQuestion").modal("show");
+            });
+
+
+            $(".btn-remove-approve").click(function () {
+
+                $.ajax({
+                    url: '/CookingType/delete',
+                    type: 'DELETE',
+                    data: { id: selected_id },
+                    success: function (result) {
+                        row.fadeOut();
+                        $("#modalQuestion").modal("hide");
+                    }
+                });
+
+            });
+        })
+    </script>
+}
