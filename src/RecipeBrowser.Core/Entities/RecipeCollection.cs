@@ -7,16 +7,13 @@ using System.Threading.Tasks;
 
 namespace RecipeBrowser.Core.Entities
 {
-    public class Review : IEntity<Guid>
+    public class RecipeCollection : IEntity<Guid>
     {
         public Guid Id { get; set; } = Guid.NewGuid();
-        public string Comment { get; set; }
-        public float Rating { get; set; }
+        public string Title { get; set; }
         public virtual User? User { get; set; }
         [ForeignKey(nameof(User))]
         public Guid UserId { get; set; }
-        public virtual Recipe? Recipe { get; set; }
-        [ForeignKey(nameof(Recipe))]
-        public Guid RecipeId { get; set; }
+        public virtual ICollection<Recipe> Recipes { get; set; } = new HashSet<Recipe>();
     }
 }

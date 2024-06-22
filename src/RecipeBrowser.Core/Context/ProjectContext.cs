@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using RecipeBrowser.Core.Entities;
-using RecipeBrowser.Core.Entities.Recipes;
 using System.Reflection.Emit;
 
 namespace RecipeBrowser.Core.Context
@@ -21,8 +20,14 @@ namespace RecipeBrowser.Core.Context
             base.OnModelCreating(builder);
         }
 
-        public DbSet<Recipe> Recipes => Set<Recipe>();
-        public DbSet<Review> Reviews => Set<Review>();
-        public DbSet<Collection> Collections => Set<Collection>();
+        public DbSet<ProductType> ProductTypes { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Measure> Measures { get; set; }
+        public DbSet<Ingredient> Ingredients { get; set; }
+        public DbSet<CookingDifficulty> CookingDifficulties { get; set; }
+        public DbSet<CookingType> CookingTypes { get; set; }
+        public DbSet<Recipe> Recipes { get; set; }
+        public DbSet<Review> Reviews { get; set; }
+        public DbSet<RecipeCollection> RecipesCollections { get; set; }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using RecipeBrowser.Core.Entities.Recipes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +10,7 @@ namespace RecipeBrowser.Core.Entities
     public class User : IdentityUser<Guid>, IEntity<Guid>
     {
         public string? FullName { get; set; }
-        public virtual ICollection<Recipe> UserRecipes { get; set; } = new HashSet<Recipe>();
+        public virtual ICollection<Review> Reviews { get; set; } = new HashSet<Review>();
+        public virtual ICollection<RecipeCollection> RecipeCollecitons { get; set; } = new HashSet<RecipeCollection>();
     }
 }
