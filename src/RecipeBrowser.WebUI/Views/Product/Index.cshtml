@@ -1,0 +1,178 @@
+﻿@using RecipeBrowser.Core.Entities;
+@using Slugify;
+@model Dictionary<ProductType, List<Product>>;
+
+@{
+    ViewData["Title"] = "Продукти";
+    var config = new SlugHelperConfiguration();
+
+    // replace the dictionary completely
+    config.StringReplacements = new()
+            {
+                ["а"] = "a",
+                ["б"] = "b",
+                ["в"] = "v",
+                ["г"] = "h",
+                ["ґ"] = "g",
+                ["д"] = "d",
+                ["е"] = "e",
+                ["є"] = "ye",
+                ["ж"] = "zh",
+                ["з"] = "z",
+                ["и"] = "y",
+                ["і"] = "i",
+                ["ї"] = "yi",
+                ["й"] = "y",
+                ["к"] = "k",
+                ["л"] = "l",
+                ["м"] = "m",
+                ["н"] = "n",
+                ["о"] = "o",
+                ["п"] = "p",
+                ["р"] = "r",
+                ["с"] = "s",
+                ["т"] = "t",
+                ["у"] = "u",
+                ["ф"] = "f",
+                ["х"] = "kh",
+                ["ц"] = "ts",
+                ["ч"] = "ch",
+                ["ш"] = "sh",
+                ["щ"] = "shch",
+                ["ь"] = "",
+                ["ю"] = "yu",
+                ["я"] = "ya",
+                ["А"] = "A",
+                ["Б"] = "B",
+                ["В"] = "V",
+                ["Г"] = "H",
+                ["Ґ"] = "G",
+                ["Д"] = "D",
+                ["Е"] = "E",
+                ["Є"] = "Ye",
+                ["Ж"] = "Zh",
+                ["З"] = "Z",
+                ["И"] = "Y",
+                ["І"] = "I",
+                ["Ї"] = "Yi",
+                ["Й"] = "Y",
+                ["К"] = "K",
+                ["Л"] = "L",
+                ["М"] = "M",
+                ["Н"] = "N",
+                ["О"] = "O",
+                ["П"] = "P",
+                ["Р"] = "R",
+                ["С"] = "S",
+                ["Т"] = "T",
+                ["У"] = "U",
+                ["Ф"] = "F",
+                ["Х"] = "Kh",
+                ["Ц"] = "Ts",
+                ["Ч"] = "Ch",
+                ["Ш"] = "Sh",
+                ["Щ"] = "Shch",
+                ["Ь"] = "",
+                ["Ю"] = "Yu",
+                ["Я"] = "Ya",
+            };
+}
+<div class="container-fluid px-5 py-3">
+
+    <a href="/Product/create" class="btn btn-success float-end">Додати</a>
+
+    <h2 class="mt-3 mb-3">@ViewData["Title"]</h2>
+
+    <nav>
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            @for (int i = 0; i < Model.Keys.Count(); i++)
+            {
+                var slug = (new SlugHelper(config)).GenerateSlug(Model.Keys.ElementAt(i).Title);
+                <button class="nav-link @(i == 0 ? "active" : "")" id="nav-@slug-tab" data-bs-toggle="tab" data-bs-target="#nav-@slug" type="button" role="tab" aria-controls="nav-@slug" aria-selected="@(i == 0 ? "true" : "false")">@(Model.Keys.ElementAt(i).Title)</button>
+            }
+        </div>
+    </nav>
+    <div class="tab-content" id="nav-tabContent">
+        @for (int i = 0; i < Model.Keys.Count(); i++)
+        {
+            var slug = new SlugHelper(config).GenerateSlug(Model.Keys.ElementAt(i).Title);
+            <div class="tab-pane fade @(i == 0 ? "show active" : "")" id="nav-@slug" role="tabpanel" aria-labelledby="nav-@slug-tab">
+                <table class="table table-bordered text-white">
+                    <thead>
+                        <tr class="text-center align-middle">
+                            <th>Назва</th>
+                            <th>Дії</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var m in Model[Model.Keys.ElementAt(i)])
+                        {
+                            <tr class="text-center align-middle">
+                                <td class="text-center align-middle">
+                                    <strong>@m.Title</strong>
+                                </td>
+                                <td class="text-center d-flex justify-content-evenly">
+                                    <a href="/Product/edit/@m.Id" class="btn btn-warning w-25">Редагувати</a>
+                                    <a href="#" data-id="@m.Id" data-name="@m.Title" class="btn btn-danger btn-remove w-25">Видалити</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+</div>
+
+<!--Modal for delete-->
+<div class="modal" tabindex="-1" id="modalQuestion">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Видалення</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Чи справді Ви бажаєте видалити продукт <strong class="selectedName">-</strong>?</p>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn-primary btn btn-remove-approve w-25">Так</a>
+                <button type="button" class="btn btn-secondary w-25" data-bs-dismiss="modal">Скасувати</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(function () {
+            let selected_id = "";
+            let selected_name = "";
+            let row = null;
+
+            $(".btn-remove").click(function () {
+
+                row = $(this).closest("tr");
+                selected_id = $(this).attr("data-id");
+                selected_name = $(this).attr("data-name");
+                $(".selectedName").html(selected_name);
+                $("#modalQuestion").modal("show");
+            });
+
+
+            $(".btn-remove-approve").click(function () {
+
+                $.ajax({
+                    url: '/Product/delete',
+                    type: 'DELETE',
+                    data: { id: selected_id },
+                    success: function (result) {
+                        row.fadeOut();
+                        $("#modalQuestion").modal("hide");
+                    }
+                });
+
+            });
+        })
+    </script>
+}
