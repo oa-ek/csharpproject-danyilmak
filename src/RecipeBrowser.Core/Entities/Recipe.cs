@@ -13,6 +13,7 @@ namespace RecipeBrowser.Core.Entities
         public Guid Id { get; set; } = Guid.NewGuid();
         public string Title { get; set; }
         public int CookDuration { get; set; }
+        public string? Description { get; set; }
         public virtual  CookingType? Type { get; set; }
 
         [ForeignKey(nameof(Type))]
@@ -21,7 +22,10 @@ namespace RecipeBrowser.Core.Entities
 
         [ForeignKey(nameof(Difficulty))]
         public Guid DifficultyId { get; set; }
-        public string ImagePath { get; set; } = "/img/no_photo.jpg";
+        public virtual User? Creator { get; set; }
+        [ForeignKey(nameof(Creator))]
+        public Guid CreatorId { get; set; }
+        public string? ImagePath { get; set; } = "/img/recipes/no_photo.jpg";
         [NotMapped]
         public IFormFile? ImageFile { get; set; }
         public virtual ICollection<Ingredient> Ingredients { get; set; } = new HashSet<Ingredient>();

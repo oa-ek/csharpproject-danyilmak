@@ -235,23 +235,30 @@ namespace RecipeBrowser.Core.Migrations
                     CookDuration = table.Column<int>(type: "int", nullable: false),
                     TypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     DifficultyId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ImagePath = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Recipes", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_Recipes_AspNetUsers_CreatorId",
+                        column: x => x.CreatorId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
                         name: "FK_Recipes_CookingDifficulties_DifficultyId",
                         column: x => x.DifficultyId,
                         principalTable: "CookingDifficulties",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Recipes_CookingTypes_TypeId",
                         column: x => x.TypeId,
                         principalTable: "CookingTypes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -341,13 +348,13 @@ namespace RecipeBrowser.Core.Migrations
                         column: x => x.MeasureId,
                         principalTable: "Measures",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Ingredients_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -379,8 +386,8 @@ namespace RecipeBrowser.Core.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { new Guid("0fab1bbb-1a68-42b1-8c19-a8afb2bb82f7"), "0fab1bbb-1a68-42b1-8c19-a8afb2bb82f7", "Admin", "ADMIN" },
-                    { new Guid("24145a30-2ae3-403c-b8ad-9e8a77cef681"), "24145a30-2ae3-403c-b8ad-9e8a77cef681", "User", "USER" }
+                    { new Guid("19ff4917-4965-4bf7-9928-f191d90312ef"), "19ff4917-4965-4bf7-9928-f191d90312ef", "User", "USER" },
+                    { new Guid("a2cbf6bf-a2d4-4ff3-8675-e4a0824de58c"), "a2cbf6bf-a2d4-4ff3-8675-e4a0824de58c", "Admin", "ADMIN" }
                 });
 
             migrationBuilder.InsertData(
@@ -388,8 +395,8 @@ namespace RecipeBrowser.Core.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FullName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { new Guid("27c9b183-5bf7-4994-b6e1-316200a5be15"), 0, "b09886d0-fda3-4faf-8212-a6269a273094", "user@recipes.daniil.page", true, "Ігор Куренко", false, null, "USER@RECIPES.DANIIL.PAGE", "USER@RECIPES.DANIIL.PAGE", "AQAAAAIAAYagAAAAEJGdrLDGUD2Q6sakOx4jukNIUCIzWySXu+MZP4IN+z0oSmABI8bWsiTNdraj4DWjWA==", null, false, "de5c715f-4728-4861-b63a-7be07e4e7be8", false, "user@recipes.daniil.page" },
-                    { new Guid("849daba3-4df2-463f-a569-40ff9b153eab"), 0, "05e36589-d08c-492f-b843-ce597dc88687", "admin@recipes.daniil.page", true, "Даниїл Максимчук", false, null, "ADMIN@RECIPES.DANIIL.PAGE", "ADMIN@RECIPES.DANIIL.PAGE", "AQAAAAIAAYagAAAAEM8AIIDBDkkMfRCv5ZVr5Nbuw50Qnz7rh3fEz0zwuCyx/ximg08pTMgH8kwtqjbBYQ==", null, false, "79a8de0b-461d-4f83-940d-117810bde414", false, "admin@recipes.daniil.page" }
+                    { new Guid("4eb1e8b4-2338-4ede-8a2f-c68f4c8446e0"), 0, "5028db07-7946-41c7-a139-2bc3e04fcfbd", "admin@recipes.daniil.page", true, "Даниїл Максимчук", false, null, "ADMIN@RECIPES.DANIIL.PAGE", "ADMIN@RECIPES.DANIIL.PAGE", "AQAAAAIAAYagAAAAEDjN9+eH8s+ZjmoXQp3qkXyBN6YbH2yS3nVO738H7D6eHEtZTKQVjhlYpAaap2caeQ==", null, false, "687f7167-55c2-467d-9d6a-2f0845bc46e0", false, "admin@recipes.daniil.page" },
+                    { new Guid("f9d6e91e-9f29-469f-8b33-b76cbd5a58dd"), 0, "68094007-3364-4cfe-96a2-0be9da0e4534", "user@recipes.daniil.page", true, "Ігор Куренко", false, null, "USER@RECIPES.DANIIL.PAGE", "USER@RECIPES.DANIIL.PAGE", "AQAAAAIAAYagAAAAEJYCHH5J11tg+vc9Ei5aGojFFFzvVsxk4U99gjw2RED0Dk53rGZaK1knDuCnxK+/IA==", null, false, "1c9fa65c-08b2-4625-b0c4-1b0b47260338", false, "user@recipes.daniil.page" }
                 });
 
             migrationBuilder.InsertData(
@@ -397,9 +404,9 @@ namespace RecipeBrowser.Core.Migrations
                 columns: new[] { "Id", "Title" },
                 values: new object[,]
                 {
-                    { new Guid("4e798cb2-0525-481f-bc99-7879697ae4e6"), "Важко" },
-                    { new Guid("b3df4de4-e14b-4c6a-9f43-ca9b7049546f"), "Нормально" },
-                    { new Guid("f164daed-eb51-41af-9be2-97c6cbe303e8"), "Легко" }
+                    { new Guid("39ebc702-d2c9-4891-8091-b1bc9fc077d5"), "Легко" },
+                    { new Guid("a281e0da-85fe-487e-9038-bf6eb9452a41"), "Нормально" },
+                    { new Guid("e185f352-1858-40d5-80a4-d3aa2a370e9d"), "Важко" }
                 });
 
             migrationBuilder.InsertData(
@@ -407,13 +414,13 @@ namespace RecipeBrowser.Core.Migrations
                 columns: new[] { "Id", "Title" },
                 values: new object[,]
                 {
-                    { new Guid("04bad01c-fe40-429c-9273-8c2e40748d41"), "Страви в духовці" },
-                    { new Guid("31ca0b8e-aa19-4ac3-a71a-8c35fce947fa"), "Страви без спеціальних пристосувань" },
-                    { new Guid("4b38af40-2aac-410e-ac40-e0b9ffd9d7c5"), "Страви в пароварці" },
-                    { new Guid("545688a7-b95a-489b-aba3-327dcb666a98"), "Страви в мультиварці" },
-                    { new Guid("9b6d41d1-63c2-47ed-aaf2-273cbcf3b24b"), "Страви для грилю, барбекю, мангалу" },
-                    { new Guid("cffae68f-1d50-4f82-8c7f-848832e22b7c"), "Страви на плиті" },
-                    { new Guid("d339528f-48e6-4fed-b27d-ea8c44662da7"), "Стави в мікрохвильовці" }
+                    { new Guid("5637f96d-e698-4e14-9082-e79456cf0b08"), "Страви в мультиварці" },
+                    { new Guid("6e6f391d-fe51-4b7b-97d9-09c04fcff2ef"), "Страви на плиті" },
+                    { new Guid("6f4b8ddc-5151-4d2a-8a94-4f9a577faa4f"), "Страви в духовці" },
+                    { new Guid("8272f94d-11b4-4989-afea-7a59bf381fd6"), "Стави в мікрохвильовці" },
+                    { new Guid("b7267971-7380-477f-b66a-3c3ee020736b"), "Страви в пароварці" },
+                    { new Guid("cb29269d-2e84-4d80-846d-1e7a349a14b9"), "Страви для грилю, барбекю, мангалу" },
+                    { new Guid("da95aa37-1151-4230-b6f1-a248059fc29e"), "Страви без спеціальних пристосувань" }
                 });
 
             migrationBuilder.InsertData(
@@ -421,13 +428,13 @@ namespace RecipeBrowser.Core.Migrations
                 columns: new[] { "Id", "Title" },
                 values: new object[,]
                 {
-                    { new Guid("39001dbc-9bbe-4514-ab30-89d2d553dcf8"), "кг." },
-                    { new Guid("533dacc7-25c0-463a-a163-23625942273f"), "стол. л." },
-                    { new Guid("84437f08-1b7a-4822-90e1-debe10c0ec5d"), "чай. л." },
-                    { new Guid("9aeb1547-b29b-455b-92a8-a3fd0c48329a"), "штуки" },
-                    { new Guid("b7232647-f78b-4d98-a12a-c37d6ebef199"), "гр." },
-                    { new Guid("bd10f730-51ae-4ada-aa56-4ef53bef873d"), "мл." },
-                    { new Guid("c71cfd22-ad07-4053-8191-796a29fc129d"), "л." }
+                    { new Guid("46fe0cbb-25b0-4b4c-aaaf-7d8b72feff86"), "кг." },
+                    { new Guid("472f3f67-13f9-459c-a0b7-58fda0ebd880"), "гр." },
+                    { new Guid("59adbbec-05cc-491e-9e7d-4e72c550cf3b"), "л." },
+                    { new Guid("75d31e01-b7f8-437a-b05e-3cd6d877f40a"), "штуки" },
+                    { new Guid("b2a3d627-01ce-488f-8a32-ce0b81216734"), "стол. л." },
+                    { new Guid("b4d40926-f149-4d45-82a2-c4a7b96aefec"), "мл." },
+                    { new Guid("be5f4627-dad5-43cb-8250-11a4f71c10a3"), "чай. л." }
                 });
 
             migrationBuilder.InsertData(
@@ -435,12 +442,12 @@ namespace RecipeBrowser.Core.Migrations
                 columns: new[] { "Id", "Title" },
                 values: new object[,]
                 {
-                    { new Guid("1eec1638-caf1-4649-95b0-4431685cc83c"), "М'ясо" },
-                    { new Guid("547aba09-7f60-4a37-928b-d8e798e89810"), "Фрукти" },
-                    { new Guid("5b7cbc8e-649b-4752-9140-db0f87d88d3e"), "Морепродукти" },
-                    { new Guid("800e323a-9c7d-44db-9eb7-df5961eeda03"), "Овочі" },
-                    { new Guid("bad4a9ee-9d2c-4f6c-92e2-c86aecee7f8a"), "Спеції" },
-                    { new Guid("cdc837a0-06d7-4a7f-ba86-a539565892ba"), "Інше" }
+                    { new Guid("3f947467-e012-4c89-b16f-e3d7c0e7d1f2"), "Овочі" },
+                    { new Guid("53b62db2-48ca-4610-b4c5-72e1751e05c3"), "Морепродукти" },
+                    { new Guid("a0042c07-dc00-4ae3-960a-d6a77eb71d71"), "Фрукти" },
+                    { new Guid("e26ae6d9-8883-4edd-abde-7ec1adae58fe"), "Інше" },
+                    { new Guid("e430f677-4599-4072-92b5-0da47d960ddf"), "Спеції" },
+                    { new Guid("e9339016-3639-44d8-b2d4-6adcc5c177b5"), "М'ясо" }
                 });
 
             migrationBuilder.InsertData(
@@ -448,8 +455,8 @@ namespace RecipeBrowser.Core.Migrations
                 columns: new[] { "RoleId", "UserId" },
                 values: new object[,]
                 {
-                    { new Guid("24145a30-2ae3-403c-b8ad-9e8a77cef681"), new Guid("27c9b183-5bf7-4994-b6e1-316200a5be15") },
-                    { new Guid("0fab1bbb-1a68-42b1-8c19-a8afb2bb82f7"), new Guid("849daba3-4df2-463f-a569-40ff9b153eab") }
+                    { new Guid("a2cbf6bf-a2d4-4ff3-8675-e4a0824de58c"), new Guid("4eb1e8b4-2338-4ede-8a2f-c68f4c8446e0") },
+                    { new Guid("19ff4917-4965-4bf7-9928-f191d90312ef"), new Guid("f9d6e91e-9f29-469f-8b33-b76cbd5a58dd") }
                 });
 
             migrationBuilder.InsertData(
@@ -457,35 +464,35 @@ namespace RecipeBrowser.Core.Migrations
                 columns: new[] { "Id", "Title", "TypeId" },
                 values: new object[,]
                 {
-                    { new Guid("01410476-a431-4ff8-8184-d95f2a371bb6"), "Філе лосося", new Guid("5b7cbc8e-649b-4752-9140-db0f87d88d3e") },
-                    { new Guid("1f9d264c-2b3f-45b5-aed3-01819a58dd42"), "Банан", new Guid("547aba09-7f60-4a37-928b-d8e798e89810") },
-                    { new Guid("2e7829e2-0532-4050-b508-f73429f7711d"), "Креветки", new Guid("5b7cbc8e-649b-4752-9140-db0f87d88d3e") },
-                    { new Guid("3101037d-5593-42c6-b57a-7933c8b5af27"), "Молоко", new Guid("cdc837a0-06d7-4a7f-ba86-a539565892ba") },
-                    { new Guid("3dbd9d2f-92c6-4d57-9297-1c3fcd4d3e8b"), "Бекон", new Guid("1eec1638-caf1-4649-95b0-4431685cc83c") },
-                    { new Guid("4655e502-06f3-496d-b8c3-598a7f0c4d3f"), "Яйця", new Guid("cdc837a0-06d7-4a7f-ba86-a539565892ba") },
-                    { new Guid("532a8663-0912-4dc7-b8b6-e8215c0a4a48"), "Борошно", new Guid("cdc837a0-06d7-4a7f-ba86-a539565892ba") },
-                    { new Guid("55626a02-ca0f-4a81-bfae-ea2899411463"), "Свинина", new Guid("1eec1638-caf1-4649-95b0-4431685cc83c") },
-                    { new Guid("55c3cd9b-b895-4b2a-9050-96f6e471829e"), "Огірок", new Guid("800e323a-9c7d-44db-9eb7-df5961eeda03") },
-                    { new Guid("5976e4c3-80ce-4c77-9c72-dc20a4c859e1"), "Куряча грудка", new Guid("1eec1638-caf1-4649-95b0-4431685cc83c") },
-                    { new Guid("692f0450-3212-427a-a7d3-8ca9cb8330bc"), "Сіль", new Guid("bad4a9ee-9d2c-4f6c-92e2-c86aecee7f8a") },
-                    { new Guid("6e500bb5-2fd9-4a3c-a1e7-1ff2c86648ec"), "Чорний перець", new Guid("bad4a9ee-9d2c-4f6c-92e2-c86aecee7f8a") },
-                    { new Guid("7176ffb5-d43f-4886-a715-f31fb9bfb28f"), "Масло", new Guid("cdc837a0-06d7-4a7f-ba86-a539565892ba") },
-                    { new Guid("72995674-8eca-45d5-ac25-7c757653f3d6"), "Паприка", new Guid("bad4a9ee-9d2c-4f6c-92e2-c86aecee7f8a") },
-                    { new Guid("89a84382-7efd-4718-adc5-bd5a0f1b2ca2"), "Морква", new Guid("800e323a-9c7d-44db-9eb7-df5961eeda03") },
-                    { new Guid("8c717611-5097-4d55-b191-c73373278261"), "Сир", new Guid("cdc837a0-06d7-4a7f-ba86-a539565892ba") },
-                    { new Guid("8cad01bc-7154-4cc1-9e49-f8ed41c36977"), "Часник", new Guid("800e323a-9c7d-44db-9eb7-df5961eeda03") },
-                    { new Guid("8cc83a55-f0d2-47af-b9a0-0eeac6274593"), "Яблуко", new Guid("547aba09-7f60-4a37-928b-d8e798e89810") },
-                    { new Guid("9e95e656-cb87-4ffe-9b50-c9940f58d78c"), "Яловичина", new Guid("1eec1638-caf1-4649-95b0-4431685cc83c") },
-                    { new Guid("9f18c098-214b-4501-80f0-ab271ad13e3f"), "Тунець", new Guid("5b7cbc8e-649b-4752-9140-db0f87d88d3e") },
-                    { new Guid("aa64f4d3-32ad-46e7-b28a-2c7a524dec40"), "Оливкова олія", new Guid("cdc837a0-06d7-4a7f-ba86-a539565892ba") },
-                    { new Guid("ab473080-72c4-4d8c-b8f2-a094c75f523e"), "Сметана", new Guid("cdc837a0-06d7-4a7f-ba86-a539565892ba") },
-                    { new Guid("afd3dc62-0de8-4ad4-86cd-10edbd8cbb2c"), "Цукор", new Guid("cdc837a0-06d7-4a7f-ba86-a539565892ba") },
-                    { new Guid("b103f6e9-219c-4031-8405-506e0ced9b35"), "Помідор", new Guid("800e323a-9c7d-44db-9eb7-df5961eeda03") },
-                    { new Guid("b397c686-e9c3-406b-b8ed-5c7f2922570d"), "Картопля", new Guid("800e323a-9c7d-44db-9eb7-df5961eeda03") },
-                    { new Guid("d47b497b-c5bb-4493-917f-f4455d4caa76"), "Гриби", new Guid("800e323a-9c7d-44db-9eb7-df5961eeda03") },
-                    { new Guid("e4e613dd-6203-4ce0-91f6-b31c34ec7112"), "Цибуля", new Guid("800e323a-9c7d-44db-9eb7-df5961eeda03") },
-                    { new Guid("ecd43716-77f6-4274-b1de-f57a46b65b48"), "Хліб", new Guid("cdc837a0-06d7-4a7f-ba86-a539565892ba") },
-                    { new Guid("f3c2427a-4bfc-4736-903c-e830e0cd6841"), "Апельсин", new Guid("547aba09-7f60-4a37-928b-d8e798e89810") }
+                    { new Guid("0ca06b98-7e33-41f6-907d-6e26b58e6510"), "Паприка", new Guid("e430f677-4599-4072-92b5-0da47d960ddf") },
+                    { new Guid("1b3ee351-e451-4c6e-a58b-cea36bc05f4c"), "Борошно", new Guid("e26ae6d9-8883-4edd-abde-7ec1adae58fe") },
+                    { new Guid("2c0b2a08-77d6-4d39-9be7-b5cd782314e2"), "Сир", new Guid("e26ae6d9-8883-4edd-abde-7ec1adae58fe") },
+                    { new Guid("3470c711-befd-4791-a60d-675416faf0d5"), "Яловичина", new Guid("e9339016-3639-44d8-b2d4-6adcc5c177b5") },
+                    { new Guid("419b52ce-81f6-49b3-b584-59483c2d40b8"), "Цибуля", new Guid("3f947467-e012-4c89-b16f-e3d7c0e7d1f2") },
+                    { new Guid("45a9a187-9956-4212-9a3a-5b1312075378"), "Помідор", new Guid("3f947467-e012-4c89-b16f-e3d7c0e7d1f2") },
+                    { new Guid("54085a94-3f0b-41b8-9341-4603e144b236"), "Банан", new Guid("a0042c07-dc00-4ae3-960a-d6a77eb71d71") },
+                    { new Guid("58b0cdc8-cad6-40d9-857a-9a8a51b5dff3"), "Свинина", new Guid("e9339016-3639-44d8-b2d4-6adcc5c177b5") },
+                    { new Guid("60d8a783-c6fe-4c0e-aa48-4f115cb751f0"), "Огірок", new Guid("3f947467-e012-4c89-b16f-e3d7c0e7d1f2") },
+                    { new Guid("634a0747-c87b-41fa-a663-815840d7a859"), "Філе лосося", new Guid("53b62db2-48ca-4610-b4c5-72e1751e05c3") },
+                    { new Guid("72e7db96-063f-44d5-a893-c6ac5210b000"), "Морква", new Guid("3f947467-e012-4c89-b16f-e3d7c0e7d1f2") },
+                    { new Guid("7905eb78-bbb5-4a69-bbce-a6b9a7748f76"), "Гриби", new Guid("3f947467-e012-4c89-b16f-e3d7c0e7d1f2") },
+                    { new Guid("7c0d62d5-47f4-44d6-b030-baf73e04120a"), "Цукор", new Guid("e26ae6d9-8883-4edd-abde-7ec1adae58fe") },
+                    { new Guid("9b0c4795-6f93-4f21-8159-19d303aa2a76"), "Часник", new Guid("3f947467-e012-4c89-b16f-e3d7c0e7d1f2") },
+                    { new Guid("aa631eb5-7245-48e6-85b5-a8ffdb0c246f"), "Масло", new Guid("e26ae6d9-8883-4edd-abde-7ec1adae58fe") },
+                    { new Guid("b31e448e-41db-4ab6-912c-9685fdeee279"), "Куряча грудка", new Guid("e9339016-3639-44d8-b2d4-6adcc5c177b5") },
+                    { new Guid("b392b8be-3cb3-4ebe-b726-0c08a0f9433f"), "Чорний перець", new Guid("e430f677-4599-4072-92b5-0da47d960ddf") },
+                    { new Guid("b577d403-235a-41be-a257-9a671a4c6f92"), "Сіль", new Guid("e430f677-4599-4072-92b5-0da47d960ddf") },
+                    { new Guid("b94d438f-97bf-4232-a9b0-336187ce0c28"), "Яйця", new Guid("e26ae6d9-8883-4edd-abde-7ec1adae58fe") },
+                    { new Guid("bc3354d8-0e4c-450d-b7d1-37ddd5a2772b"), "Креветки", new Guid("53b62db2-48ca-4610-b4c5-72e1751e05c3") },
+                    { new Guid("c20c7b03-fe0f-4d4f-bef4-377aa758d429"), "Тунець", new Guid("53b62db2-48ca-4610-b4c5-72e1751e05c3") },
+                    { new Guid("c4ae9c39-1802-4514-85c8-1acc9aab62ae"), "Молоко", new Guid("e26ae6d9-8883-4edd-abde-7ec1adae58fe") },
+                    { new Guid("c91eec73-4c50-4173-9501-1b1f5f5c9b36"), "Бекон", new Guid("e9339016-3639-44d8-b2d4-6adcc5c177b5") },
+                    { new Guid("d8585cf2-4666-45b2-9147-9eff953c3d65"), "Апельсин", new Guid("a0042c07-dc00-4ae3-960a-d6a77eb71d71") },
+                    { new Guid("dc0a2c15-32e5-4e5d-9c05-905226dc5e1e"), "Яблуко", new Guid("a0042c07-dc00-4ae3-960a-d6a77eb71d71") },
+                    { new Guid("e553faf1-3587-4893-a929-d063ba4b58c7"), "Хліб", new Guid("e26ae6d9-8883-4edd-abde-7ec1adae58fe") },
+                    { new Guid("eff9fa2f-d3f3-48d6-8226-c134795d6a9a"), "Оливкова олія", new Guid("e26ae6d9-8883-4edd-abde-7ec1adae58fe") },
+                    { new Guid("f1464541-9b0a-4403-82b5-bf21db9933fc"), "Сметана", new Guid("e26ae6d9-8883-4edd-abde-7ec1adae58fe") },
+                    { new Guid("fc9597f1-2dc7-47b9-8419-7bbef6182380"), "Картопля", new Guid("3f947467-e012-4c89-b16f-e3d7c0e7d1f2") }
                 });
 
             migrationBuilder.CreateIndex(
@@ -551,6 +558,11 @@ namespace RecipeBrowser.Core.Migrations
                 name: "IX_RecipeRecipeCollection_RecipesId",
                 table: "RecipeRecipeCollection",
                 column: "RecipesId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Recipes_CreatorId",
+                table: "Recipes",
+                column: "CreatorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Recipes_DifficultyId",

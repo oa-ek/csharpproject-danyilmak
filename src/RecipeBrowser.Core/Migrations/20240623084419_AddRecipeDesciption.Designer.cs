@@ -12,8 +12,8 @@ using RecipeBrowser.Core.Context;
 namespace RecipeBrowser.Core.Migrations
 {
     [DbContext(typeof(ProjectContext))]
-    [Migration("20240621200316_Init")]
-    partial class Init
+    [Migration("20240623084419_AddRecipeDesciption")]
+    partial class AddRecipeDesciption
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -73,15 +73,15 @@ namespace RecipeBrowser.Core.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("0fab1bbb-1a68-42b1-8c19-a8afb2bb82f7"),
-                            ConcurrencyStamp = "0fab1bbb-1a68-42b1-8c19-a8afb2bb82f7",
+                            Id = new Guid("612c374c-eb70-4cba-a645-a6851c4a0917"),
+                            ConcurrencyStamp = "612c374c-eb70-4cba-a645-a6851c4a0917",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = new Guid("24145a30-2ae3-403c-b8ad-9e8a77cef681"),
-                            ConcurrencyStamp = "24145a30-2ae3-403c-b8ad-9e8a77cef681",
+                            Id = new Guid("3c8fcf0a-cd7c-4f09-a874-4a06d05d2039"),
+                            ConcurrencyStamp = "3c8fcf0a-cd7c-4f09-a874-4a06d05d2039",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -175,13 +175,13 @@ namespace RecipeBrowser.Core.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = new Guid("849daba3-4df2-463f-a569-40ff9b153eab"),
-                            RoleId = new Guid("0fab1bbb-1a68-42b1-8c19-a8afb2bb82f7")
+                            UserId = new Guid("f5a6d4e1-91f8-4772-b4bb-285e37b1e4c2"),
+                            RoleId = new Guid("612c374c-eb70-4cba-a645-a6851c4a0917")
                         },
                         new
                         {
-                            UserId = new Guid("27c9b183-5bf7-4994-b6e1-316200a5be15"),
-                            RoleId = new Guid("24145a30-2ae3-403c-b8ad-9e8a77cef681")
+                            UserId = new Guid("bd81a1a3-1c34-4d62-ae48-f2b579bb431e"),
+                            RoleId = new Guid("3c8fcf0a-cd7c-4f09-a874-4a06d05d2039")
                         });
                 });
 
@@ -223,17 +223,17 @@ namespace RecipeBrowser.Core.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("f164daed-eb51-41af-9be2-97c6cbe303e8"),
+                            Id = new Guid("139c57c6-f916-4135-9b88-0d48b3cd5546"),
                             Title = "Легко"
                         },
                         new
                         {
-                            Id = new Guid("b3df4de4-e14b-4c6a-9f43-ca9b7049546f"),
+                            Id = new Guid("8c2713f2-dd17-4a44-bdc3-54520a71b211"),
                             Title = "Нормально"
                         },
                         new
                         {
-                            Id = new Guid("4e798cb2-0525-481f-bc99-7879697ae4e6"),
+                            Id = new Guid("8fc02063-90a3-4efa-b0f2-52ecc07e3ff6"),
                             Title = "Важко"
                         });
                 });
@@ -255,37 +255,37 @@ namespace RecipeBrowser.Core.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("d339528f-48e6-4fed-b27d-ea8c44662da7"),
+                            Id = new Guid("bf4b922f-e57f-4293-9b18-13bafcf43b1e"),
                             Title = "Стави в мікрохвильовці"
                         },
                         new
                         {
-                            Id = new Guid("9b6d41d1-63c2-47ed-aaf2-273cbcf3b24b"),
+                            Id = new Guid("9b71d678-fdbd-4bac-9dc2-535aa76f47fb"),
                             Title = "Страви для грилю, барбекю, мангалу"
                         },
                         new
                         {
-                            Id = new Guid("545688a7-b95a-489b-aba3-327dcb666a98"),
+                            Id = new Guid("b8e95752-7ba9-4f76-97a6-30c9fed48044"),
                             Title = "Страви в мультиварці"
                         },
                         new
                         {
-                            Id = new Guid("31ca0b8e-aa19-4ac3-a71a-8c35fce947fa"),
+                            Id = new Guid("4ca4e8b7-dde9-4578-92ce-5d4fcfbf5126"),
                             Title = "Страви без спеціальних пристосувань"
                         },
                         new
                         {
-                            Id = new Guid("cffae68f-1d50-4f82-8c7f-848832e22b7c"),
+                            Id = new Guid("b12561ad-463a-49e1-bcbc-8a96ff64d606"),
                             Title = "Страви на плиті"
                         },
                         new
                         {
-                            Id = new Guid("04bad01c-fe40-429c-9273-8c2e40748d41"),
+                            Id = new Guid("869f4859-b52e-498a-b50a-e563cf872132"),
                             Title = "Страви в духовці"
                         },
                         new
                         {
-                            Id = new Guid("4b38af40-2aac-410e-ac40-e0b9ffd9d7c5"),
+                            Id = new Guid("b4052217-0448-4609-9dd5-39bc8661ec5a"),
                             Title = "Страви в пароварці"
                         });
                 });
@@ -331,37 +331,37 @@ namespace RecipeBrowser.Core.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("b7232647-f78b-4d98-a12a-c37d6ebef199"),
+                            Id = new Guid("92c5af6f-3e7a-43cd-9719-2b7448a20795"),
                             Title = "гр."
                         },
                         new
                         {
-                            Id = new Guid("39001dbc-9bbe-4514-ab30-89d2d553dcf8"),
+                            Id = new Guid("a8ed4626-9e39-4511-b583-8dd832045139"),
                             Title = "кг."
                         },
                         new
                         {
-                            Id = new Guid("c71cfd22-ad07-4053-8191-796a29fc129d"),
+                            Id = new Guid("69bd25bc-2e49-41f4-962d-6ba64c3f8ba2"),
                             Title = "л."
                         },
                         new
                         {
-                            Id = new Guid("bd10f730-51ae-4ada-aa56-4ef53bef873d"),
+                            Id = new Guid("604b3799-3eef-4299-b9e6-9a87e5d6222a"),
                             Title = "мл."
                         },
                         new
                         {
-                            Id = new Guid("533dacc7-25c0-463a-a163-23625942273f"),
+                            Id = new Guid("d0e8e411-e65e-4cf0-914d-1626a008692a"),
                             Title = "стол. л."
                         },
                         new
                         {
-                            Id = new Guid("84437f08-1b7a-4822-90e1-debe10c0ec5d"),
+                            Id = new Guid("c5a39571-7d08-46b3-9e3e-4ef9b5bf43a3"),
                             Title = "чай. л."
                         },
                         new
                         {
-                            Id = new Guid("9aeb1547-b29b-455b-92a8-a3fd0c48329a"),
+                            Id = new Guid("abed8a9e-121c-41aa-ae37-157d86e54296"),
                             Title = "штуки"
                         });
                 });
@@ -388,177 +388,177 @@ namespace RecipeBrowser.Core.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("8cc83a55-f0d2-47af-b9a0-0eeac6274593"),
+                            Id = new Guid("a3a2bdf4-2bbf-4f36-b73a-6539bf300cc9"),
                             Title = "Яблуко",
-                            TypeId = new Guid("547aba09-7f60-4a37-928b-d8e798e89810")
+                            TypeId = new Guid("925a1826-f862-44c6-96db-e91a545fc477")
                         },
                         new
                         {
-                            Id = new Guid("1f9d264c-2b3f-45b5-aed3-01819a58dd42"),
+                            Id = new Guid("4cb42f80-a88a-48f2-9ac2-5bbe1bf5e9af"),
                             Title = "Банан",
-                            TypeId = new Guid("547aba09-7f60-4a37-928b-d8e798e89810")
+                            TypeId = new Guid("925a1826-f862-44c6-96db-e91a545fc477")
                         },
                         new
                         {
-                            Id = new Guid("f3c2427a-4bfc-4736-903c-e830e0cd6841"),
+                            Id = new Guid("70c5a4dd-7c91-421c-b225-e882f56512ef"),
                             Title = "Апельсин",
-                            TypeId = new Guid("547aba09-7f60-4a37-928b-d8e798e89810")
+                            TypeId = new Guid("925a1826-f862-44c6-96db-e91a545fc477")
                         },
                         new
                         {
-                            Id = new Guid("b103f6e9-219c-4031-8405-506e0ced9b35"),
+                            Id = new Guid("4da45bd4-2621-4fc2-965d-921ed9d13de4"),
                             Title = "Помідор",
-                            TypeId = new Guid("800e323a-9c7d-44db-9eb7-df5961eeda03")
+                            TypeId = new Guid("d37dee6d-d272-43a6-8c36-ef9a13b99c8a")
                         },
                         new
                         {
-                            Id = new Guid("89a84382-7efd-4718-adc5-bd5a0f1b2ca2"),
+                            Id = new Guid("3062fa33-88a1-4380-963d-5b6fd9a35e5d"),
                             Title = "Морква",
-                            TypeId = new Guid("800e323a-9c7d-44db-9eb7-df5961eeda03")
+                            TypeId = new Guid("d37dee6d-d272-43a6-8c36-ef9a13b99c8a")
                         },
                         new
                         {
-                            Id = new Guid("b397c686-e9c3-406b-b8ed-5c7f2922570d"),
+                            Id = new Guid("409afb1e-043f-47a2-80a0-169882394daa"),
                             Title = "Картопля",
-                            TypeId = new Guid("800e323a-9c7d-44db-9eb7-df5961eeda03")
+                            TypeId = new Guid("d37dee6d-d272-43a6-8c36-ef9a13b99c8a")
                         },
                         new
                         {
-                            Id = new Guid("5976e4c3-80ce-4c77-9c72-dc20a4c859e1"),
+                            Id = new Guid("17ce5cee-cdb7-4690-b293-5f89fc84c5ef"),
                             Title = "Куряча грудка",
-                            TypeId = new Guid("1eec1638-caf1-4649-95b0-4431685cc83c")
+                            TypeId = new Guid("8887c26a-221e-483f-9903-e64a0674b04f")
                         },
                         new
                         {
-                            Id = new Guid("55626a02-ca0f-4a81-bfae-ea2899411463"),
+                            Id = new Guid("dcd19a23-6aa6-4b66-8fa7-dad4c20e7d65"),
                             Title = "Свинина",
-                            TypeId = new Guid("1eec1638-caf1-4649-95b0-4431685cc83c")
+                            TypeId = new Guid("8887c26a-221e-483f-9903-e64a0674b04f")
                         },
                         new
                         {
-                            Id = new Guid("9e95e656-cb87-4ffe-9b50-c9940f58d78c"),
+                            Id = new Guid("67d5a57a-572e-431c-a8a2-2aaa9e7430de"),
                             Title = "Яловичина",
-                            TypeId = new Guid("1eec1638-caf1-4649-95b0-4431685cc83c")
+                            TypeId = new Guid("8887c26a-221e-483f-9903-e64a0674b04f")
                         },
                         new
                         {
-                            Id = new Guid("01410476-a431-4ff8-8184-d95f2a371bb6"),
+                            Id = new Guid("918c40dd-b565-4d4c-b923-6629a66c5ef1"),
                             Title = "Філе лосося",
-                            TypeId = new Guid("5b7cbc8e-649b-4752-9140-db0f87d88d3e")
+                            TypeId = new Guid("d9983e69-d9d1-47f3-8dce-a87786f13f8d")
                         },
                         new
                         {
-                            Id = new Guid("2e7829e2-0532-4050-b508-f73429f7711d"),
+                            Id = new Guid("9c371cf7-161c-4381-a83e-34254cc6e810"),
                             Title = "Креветки",
-                            TypeId = new Guid("5b7cbc8e-649b-4752-9140-db0f87d88d3e")
+                            TypeId = new Guid("d9983e69-d9d1-47f3-8dce-a87786f13f8d")
                         },
                         new
                         {
-                            Id = new Guid("9f18c098-214b-4501-80f0-ab271ad13e3f"),
+                            Id = new Guid("82f02e2a-0cf7-4045-9067-64f88932dce3"),
                             Title = "Тунець",
-                            TypeId = new Guid("5b7cbc8e-649b-4752-9140-db0f87d88d3e")
+                            TypeId = new Guid("d9983e69-d9d1-47f3-8dce-a87786f13f8d")
                         },
                         new
                         {
-                            Id = new Guid("692f0450-3212-427a-a7d3-8ca9cb8330bc"),
+                            Id = new Guid("d9a4f531-bad8-4045-beb5-dfa629d10b37"),
                             Title = "Сіль",
-                            TypeId = new Guid("bad4a9ee-9d2c-4f6c-92e2-c86aecee7f8a")
+                            TypeId = new Guid("cd046d14-dc80-4fcb-bdf9-a1c0dd6b4ebb")
                         },
                         new
                         {
-                            Id = new Guid("6e500bb5-2fd9-4a3c-a1e7-1ff2c86648ec"),
+                            Id = new Guid("18acd06c-d723-4060-9e28-b080cca3715c"),
                             Title = "Чорний перець",
-                            TypeId = new Guid("bad4a9ee-9d2c-4f6c-92e2-c86aecee7f8a")
+                            TypeId = new Guid("cd046d14-dc80-4fcb-bdf9-a1c0dd6b4ebb")
                         },
                         new
                         {
-                            Id = new Guid("72995674-8eca-45d5-ac25-7c757653f3d6"),
+                            Id = new Guid("6fdb469b-4484-40d2-b354-ce6aa8901443"),
                             Title = "Паприка",
-                            TypeId = new Guid("bad4a9ee-9d2c-4f6c-92e2-c86aecee7f8a")
+                            TypeId = new Guid("cd046d14-dc80-4fcb-bdf9-a1c0dd6b4ebb")
                         },
                         new
                         {
-                            Id = new Guid("aa64f4d3-32ad-46e7-b28a-2c7a524dec40"),
+                            Id = new Guid("bf54daa1-0ef5-455d-bca1-c71e4e5d39ba"),
                             Title = "Оливкова олія",
-                            TypeId = new Guid("cdc837a0-06d7-4a7f-ba86-a539565892ba")
+                            TypeId = new Guid("8af325f3-5040-40eb-a0bc-9ce157e588c1")
                         },
                         new
                         {
-                            Id = new Guid("7176ffb5-d43f-4886-a715-f31fb9bfb28f"),
+                            Id = new Guid("2344e418-8530-41e2-9940-344e093ebdf8"),
                             Title = "Масло",
-                            TypeId = new Guid("cdc837a0-06d7-4a7f-ba86-a539565892ba")
+                            TypeId = new Guid("8af325f3-5040-40eb-a0bc-9ce157e588c1")
                         },
                         new
                         {
-                            Id = new Guid("3101037d-5593-42c6-b57a-7933c8b5af27"),
+                            Id = new Guid("beffe174-6a24-443e-86f1-c956bab35781"),
                             Title = "Молоко",
-                            TypeId = new Guid("cdc837a0-06d7-4a7f-ba86-a539565892ba")
+                            TypeId = new Guid("8af325f3-5040-40eb-a0bc-9ce157e588c1")
                         },
                         new
                         {
-                            Id = new Guid("4655e502-06f3-496d-b8c3-598a7f0c4d3f"),
+                            Id = new Guid("37ae8938-836e-41d6-a4c0-a23a251c9ca2"),
                             Title = "Яйця",
-                            TypeId = new Guid("cdc837a0-06d7-4a7f-ba86-a539565892ba")
+                            TypeId = new Guid("8af325f3-5040-40eb-a0bc-9ce157e588c1")
                         },
                         new
                         {
-                            Id = new Guid("532a8663-0912-4dc7-b8b6-e8215c0a4a48"),
+                            Id = new Guid("2a0c4c52-5635-4386-8e31-efb8532542d7"),
                             Title = "Борошно",
-                            TypeId = new Guid("cdc837a0-06d7-4a7f-ba86-a539565892ba")
+                            TypeId = new Guid("8af325f3-5040-40eb-a0bc-9ce157e588c1")
                         },
                         new
                         {
-                            Id = new Guid("e4e613dd-6203-4ce0-91f6-b31c34ec7112"),
+                            Id = new Guid("0019c4c7-299f-4f0a-b3c7-01fce6af80e7"),
                             Title = "Цибуля",
-                            TypeId = new Guid("800e323a-9c7d-44db-9eb7-df5961eeda03")
+                            TypeId = new Guid("d37dee6d-d272-43a6-8c36-ef9a13b99c8a")
                         },
                         new
                         {
-                            Id = new Guid("8cad01bc-7154-4cc1-9e49-f8ed41c36977"),
+                            Id = new Guid("7a8efa5a-85b5-43a5-8cae-4ba781e0ba17"),
                             Title = "Часник",
-                            TypeId = new Guid("800e323a-9c7d-44db-9eb7-df5961eeda03")
+                            TypeId = new Guid("d37dee6d-d272-43a6-8c36-ef9a13b99c8a")
                         },
                         new
                         {
-                            Id = new Guid("55c3cd9b-b895-4b2a-9050-96f6e471829e"),
+                            Id = new Guid("f642e718-5271-4827-87cc-8bb66be28b51"),
                             Title = "Огірок",
-                            TypeId = new Guid("800e323a-9c7d-44db-9eb7-df5961eeda03")
+                            TypeId = new Guid("d37dee6d-d272-43a6-8c36-ef9a13b99c8a")
                         },
                         new
                         {
-                            Id = new Guid("8c717611-5097-4d55-b191-c73373278261"),
+                            Id = new Guid("6330991a-bd8c-4d7a-b825-6922984ca83d"),
                             Title = "Сир",
-                            TypeId = new Guid("cdc837a0-06d7-4a7f-ba86-a539565892ba")
+                            TypeId = new Guid("8af325f3-5040-40eb-a0bc-9ce157e588c1")
                         },
                         new
                         {
-                            Id = new Guid("ecd43716-77f6-4274-b1de-f57a46b65b48"),
+                            Id = new Guid("4073af8d-5d36-4484-9310-b44a5415e99e"),
                             Title = "Хліб",
-                            TypeId = new Guid("cdc837a0-06d7-4a7f-ba86-a539565892ba")
+                            TypeId = new Guid("8af325f3-5040-40eb-a0bc-9ce157e588c1")
                         },
                         new
                         {
-                            Id = new Guid("afd3dc62-0de8-4ad4-86cd-10edbd8cbb2c"),
+                            Id = new Guid("e4eb93d9-d5b2-4342-b89c-6e0b03504298"),
                             Title = "Цукор",
-                            TypeId = new Guid("cdc837a0-06d7-4a7f-ba86-a539565892ba")
+                            TypeId = new Guid("8af325f3-5040-40eb-a0bc-9ce157e588c1")
                         },
                         new
                         {
-                            Id = new Guid("3dbd9d2f-92c6-4d57-9297-1c3fcd4d3e8b"),
+                            Id = new Guid("24116bee-3aba-47e5-95d1-b5bddd0d03c6"),
                             Title = "Бекон",
-                            TypeId = new Guid("1eec1638-caf1-4649-95b0-4431685cc83c")
+                            TypeId = new Guid("8887c26a-221e-483f-9903-e64a0674b04f")
                         },
                         new
                         {
-                            Id = new Guid("ab473080-72c4-4d8c-b8f2-a094c75f523e"),
+                            Id = new Guid("0b582b74-c04c-4137-839f-1ab3ba959434"),
                             Title = "Сметана",
-                            TypeId = new Guid("cdc837a0-06d7-4a7f-ba86-a539565892ba")
+                            TypeId = new Guid("8af325f3-5040-40eb-a0bc-9ce157e588c1")
                         },
                         new
                         {
-                            Id = new Guid("d47b497b-c5bb-4493-917f-f4455d4caa76"),
+                            Id = new Guid("eab25ceb-dea3-4c37-891b-c08db733023a"),
                             Title = "Гриби",
-                            TypeId = new Guid("800e323a-9c7d-44db-9eb7-df5961eeda03")
+                            TypeId = new Guid("d37dee6d-d272-43a6-8c36-ef9a13b99c8a")
                         });
                 });
 
@@ -579,32 +579,32 @@ namespace RecipeBrowser.Core.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("547aba09-7f60-4a37-928b-d8e798e89810"),
+                            Id = new Guid("925a1826-f862-44c6-96db-e91a545fc477"),
                             Title = "Фрукти"
                         },
                         new
                         {
-                            Id = new Guid("800e323a-9c7d-44db-9eb7-df5961eeda03"),
+                            Id = new Guid("d37dee6d-d272-43a6-8c36-ef9a13b99c8a"),
                             Title = "Овочі"
                         },
                         new
                         {
-                            Id = new Guid("1eec1638-caf1-4649-95b0-4431685cc83c"),
+                            Id = new Guid("8887c26a-221e-483f-9903-e64a0674b04f"),
                             Title = "М'ясо"
                         },
                         new
                         {
-                            Id = new Guid("5b7cbc8e-649b-4752-9140-db0f87d88d3e"),
+                            Id = new Guid("d9983e69-d9d1-47f3-8dce-a87786f13f8d"),
                             Title = "Морепродукти"
                         },
                         new
                         {
-                            Id = new Guid("bad4a9ee-9d2c-4f6c-92e2-c86aecee7f8a"),
+                            Id = new Guid("cd046d14-dc80-4fcb-bdf9-a1c0dd6b4ebb"),
                             Title = "Спеції"
                         },
                         new
                         {
-                            Id = new Guid("cdc837a0-06d7-4a7f-ba86-a539565892ba"),
+                            Id = new Guid("8af325f3-5040-40eb-a0bc-9ce157e588c1"),
                             Title = "Інше"
                         });
                 });
@@ -618,11 +618,16 @@ namespace RecipeBrowser.Core.Migrations
                     b.Property<int>("CookDuration")
                         .HasColumnType("int");
 
+                    b.Property<Guid>("CreatorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<Guid>("DifficultyId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ImagePath")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
@@ -633,6 +638,8 @@ namespace RecipeBrowser.Core.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CreatorId");
 
                     b.HasIndex("DifficultyId");
 
@@ -760,35 +767,35 @@ namespace RecipeBrowser.Core.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("849daba3-4df2-463f-a569-40ff9b153eab"),
+                            Id = new Guid("f5a6d4e1-91f8-4772-b4bb-285e37b1e4c2"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "05e36589-d08c-492f-b843-ce597dc88687",
+                            ConcurrencyStamp = "3f46ad96-9838-4318-b27f-d87674b8d15a",
                             Email = "admin@recipes.daniil.page",
                             EmailConfirmed = true,
                             FullName = "Даниїл Максимчук",
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@RECIPES.DANIIL.PAGE",
                             NormalizedUserName = "ADMIN@RECIPES.DANIIL.PAGE",
-                            PasswordHash = "AQAAAAIAAYagAAAAEM8AIIDBDkkMfRCv5ZVr5Nbuw50Qnz7rh3fEz0zwuCyx/ximg08pTMgH8kwtqjbBYQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAENX4e9olo/ZzT57RTqbZL+l/1nXToueCOg8HL20NgiWsX7MB8+lk2y3/fljwBdXLiA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "79a8de0b-461d-4f83-940d-117810bde414",
+                            SecurityStamp = "94a1fdf0-9d75-4792-8a88-a59beee967ac",
                             TwoFactorEnabled = false,
                             UserName = "admin@recipes.daniil.page"
                         },
                         new
                         {
-                            Id = new Guid("27c9b183-5bf7-4994-b6e1-316200a5be15"),
+                            Id = new Guid("bd81a1a3-1c34-4d62-ae48-f2b579bb431e"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b09886d0-fda3-4faf-8212-a6269a273094",
+                            ConcurrencyStamp = "19156a53-201f-455b-be6a-086b0f469a55",
                             Email = "user@recipes.daniil.page",
                             EmailConfirmed = true,
                             FullName = "Ігор Куренко",
                             LockoutEnabled = false,
                             NormalizedEmail = "USER@RECIPES.DANIIL.PAGE",
                             NormalizedUserName = "USER@RECIPES.DANIIL.PAGE",
-                            PasswordHash = "AQAAAAIAAYagAAAAEJGdrLDGUD2Q6sakOx4jukNIUCIzWySXu+MZP4IN+z0oSmABI8bWsiTNdraj4DWjWA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEMX3bgPcFLSv77YTnXgEJs02DYBaKhykPyCvCJclwNM6dVLcQDNCdy/yqbF1EcFCbg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "de5c715f-4728-4861-b63a-7be07e4e7be8",
+                            SecurityStamp = "048660f9-014f-47ef-b0ea-3a8366f34630",
                             TwoFactorEnabled = false,
                             UserName = "user@recipes.daniil.page"
                         });
@@ -880,13 +887,13 @@ namespace RecipeBrowser.Core.Migrations
                     b.HasOne("RecipeBrowser.Core.Entities.Measure", "Measure")
                         .WithMany("Ingredients")
                         .HasForeignKey("MeasureId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("RecipeBrowser.Core.Entities.Product", "Product")
                         .WithMany("Ingredients")
                         .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Measure");
@@ -907,17 +914,25 @@ namespace RecipeBrowser.Core.Migrations
 
             modelBuilder.Entity("RecipeBrowser.Core.Entities.Recipe", b =>
                 {
+                    b.HasOne("RecipeBrowser.Core.Entities.User", "Creator")
+                        .WithMany("Recipes")
+                        .HasForeignKey("CreatorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("RecipeBrowser.Core.Entities.CookingDifficulty", "Difficulty")
                         .WithMany("Recipes")
                         .HasForeignKey("DifficultyId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("RecipeBrowser.Core.Entities.CookingType", "Type")
                         .WithMany("Recipes")
                         .HasForeignKey("TypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Creator");
 
                     b.Navigation("Difficulty");
 
@@ -1002,6 +1017,8 @@ namespace RecipeBrowser.Core.Migrations
             modelBuilder.Entity("RecipeBrowser.Core.Entities.User", b =>
                 {
                     b.Navigation("RecipeCollecitons");
+
+                    b.Navigation("Recipes");
 
                     b.Navigation("Reviews");
                 });
