@@ -9,35 +9,61 @@
                 <span>Головна</span>
             </a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" asp-controller="Recipes">
-                <i class="bi bi-grid"></i>
-                <span>Рецепти</span>
-            </a>
-        </li>
+        @if(!User.IsInRole("Admin"))
+        {
+            <li class="nav-item">
+                <a class="nav-link" asp-controller="Recipe">
+                    <i class="bi bi-grid"></i>
+                    <span>Рецепти</span>
+                </a>
+            </li>
+        }
 
         @if (User.IsInRole("Admin"))
         {
             <li class="nav-item">
-                <a class="nav-link" asp-controller="User">
-                    <i class="bi bi-grid"></i>
-                    <span>Користувачі</span>
-                </a>
-            </li>
-
-            <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-menu-button-wide"></i><span>Components</span><i class="bi bi-chevron-down ms-auto"></i>
+                    <i class="bi bi-menu-button-wide"></i><span>Менеджмент сутностей</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li>
-                        <a href="components-alerts.html">
-                            <i class="bi bi-circle"></i><span>Alerts</span>
+                        <a href="/ProductType">
+                            <i class="bi bi-circle"></i><span>Типи продуктів</span>
                         </a>
                     </li>
                     <li>
-                        <a href="components-accordion.html">
-                            <i class="bi bi-circle"></i><span>Accordion</span>
+                        <a href="/Product">
+                            <i class="bi bi-circle"></i><span>Продукти</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Measure">
+                            <i class="bi bi-circle"></i><span>Міри</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/CookingType">
+                            <i class="bi bi-circle"></i><span>Способи приготування</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/CookingDifficulty">
+                            <i class="bi bi-circle"></i><span>Складності страв</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Recipe">
+                            <i class="bi bi-circle"></i><span>Рецепти</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Review">
+                            <i class="bi bi-circle"></i><span>Відгуки</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/User">
+                            <i class="bi bi-circle"></i><span>Користувачі</span>
                         </a>
                     </li>
                 </ul>

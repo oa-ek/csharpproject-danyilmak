@@ -1,0 +1,70 @@
+﻿@using RecipeBrowser.Core.Entities
+@model Review
+
+@{
+    var users = ViewBag.Users as List<SelectListItem>;
+    var recipes = ViewBag.Recipes as List<SelectListItem>;
+}
+
+<div class="card w-50 m-auto">
+    <div class="card-header px-3 text-center">
+        <h1>Новий відгук</h1>
+    </div>
+    <div class="card-body">
+        <form asp-action="Create" enctype="multipart/form-data">
+            <div class="container-fluid px-5 py-2">
+                @Html.AntiForgeryToken()
+                <div class="form-group mt-3">
+                    <label>Користувач</label>
+                    <select asp-for="UserId" asp-items="@(users)" id="users" class="form-control">
+                        <option value="0" selected="selected">- Оберіть користувача -</option>
+                    </select>
+                </div>
+                <div class="form-group mt-3">
+                    <label>Рецепт</label>
+                    <select asp-for="RecipeId" asp-items="@(recipes)" id="recipes" class="form-control">
+                        <option value="0" selected="selected">- Оберіть рецепт -</option>
+                    </select>
+                </div>
+                <div class="mt-3">
+                    <div class="d-flex justify-content-center gap-5 align-items-center">
+                        <label>Рейтинг</label>
+                        <input asp-for="Rating" readonly class="form-control" type="number" step="0.1" hidden />
+                        <div class="my-rating-4"></div>
+                    </div>
+                </div>
+                <div class="form-group mt-3">
+                    <label>Текст відгуку</label>
+                    @Html.TextAreaFor(model => model.Comment, new { @class = "form-control" })
+                </div>
+                <div class="d-flex gap-2 align-items-center justify-content-center">
+                    <button class="btn btn-primary w-25" type="submit">Створити</button>
+                    <a class="btn btn-dark my-2 w-25" asp-action="">До списку</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<link rel="stylesheet" href="~/css/star-rating-svg.css" />
+@section Scripts {
+    <script src="~/js/jquery.star-rating-svg.js"></script>
+    
+    <script>
+        $(function () {
+            $(".my-rating-4").starRating({
+                totalStars: 5,
+                starSize: 45,
+                emptyColor: 'lightgray',
+                hoverColor: 'salmon',
+                activeColor: 'cornflowerblue',
+                strokeWidth: 0,
+                useGradient: false,
+                callback: function (currentRating, $el) {
+                    $("#Rating").val(currentRating);
+                }
+            });
+        });
+    </script>
+
+}
