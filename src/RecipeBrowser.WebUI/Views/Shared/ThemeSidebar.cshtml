@@ -12,9 +12,18 @@
         @if(!User.IsInRole("Admin"))
         {
             <li class="nav-item">
-                <a class="nav-link" asp-controller="Recipe">
+                <a href="/Recipe/UserView" class="nav-link text-decoration-none">
                     <i class="bi bi-grid"></i>
                     <span>Рецепти</span>
+                </a>
+            </li>
+        }
+        @if (!User.IsInRole("Admin") || User.IsInRole("User"))
+        {
+            <li class="nav-item">
+                <a href="/RecipeCollection" class="nav-link text-decoration-none">
+                    <i class="bi bi-grid"></i>
+                    <span>Мої колекції</span>
                 </a>
             </li>
         }

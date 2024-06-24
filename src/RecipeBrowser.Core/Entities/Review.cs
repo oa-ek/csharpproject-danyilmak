@@ -12,6 +12,7 @@ namespace RecipeBrowser.Core.Entities
         public Guid Id { get; set; } = Guid.NewGuid();
         public string Comment { get; set; }
         public float Rating { get; set; }
+        public DateTime? CreationTime { get; set; }
         public virtual User? User { get; set; }
         [ForeignKey(nameof(User))]
         public Guid UserId { get; set; }

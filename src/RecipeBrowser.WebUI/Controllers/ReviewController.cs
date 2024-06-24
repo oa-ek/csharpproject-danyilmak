@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.Blazor;
 using RecipeBrowser.Core.Entities;
 using RecipeBrowser.Repos.Common;
 
@@ -102,6 +103,39 @@ namespace RecipeBrowser.WebUI.Controllers
             catch (Exception ex)
             {
                 return Json(new { success = false, message = $"Помилка при видаленні запису: {ex.Message}" });
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateUserReview(Guid recipeId, string comment, string rating)
+        {
+            rating = rating.Replace('.', ',');
+            var reviews = await _reviewRepository.GetAllAsync();
+            var currentUserId = (await _userRepository.GetAllAsync()).First(u => u.Email == User.Identity.Name).Id;
+
+            if (reviews.Any(r => r.RecipeId == recipeId && r.UserId == currentUserId))
+            {
+                return Json(new { success = false, message = $"Подібний запис вже існує" });
+
+            }
+
+            Review model = new Review()
+            {
+                Comment = comment,
+                RecipeId = recipeId,
+                UserId = currentUserId,
+                Rating = float.Parse(rating),
+                CreationTime = DateTime.Now
+            };
+
+            try
+            {
+                await _reviewRepository.CreateAsync(model);
+                return Json(new { success = true, message = "Запис успішно створено" });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = $"Помилка при створенні запису: {ex.Message}" });
             }
         }
     }

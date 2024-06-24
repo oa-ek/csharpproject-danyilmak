@@ -17,6 +17,7 @@ namespace RecipeBrowser.WebUI.Controllers
         private readonly IRepository<Recipe, Guid> _recipeRepository;
         private readonly IRepository<User, Guid> _userRepository;
         private readonly IRepository<Ingredient, Guid> _ingredientRepository;
+        private readonly IRepository<ProductType, Guid> _productTypeRepository;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
         public RecipeController(IRepository<Product, Guid> productRepository, 
@@ -26,6 +27,7 @@ namespace RecipeBrowser.WebUI.Controllers
             IRepository<Recipe, Guid> recipeRepository,
             IRepository<User, Guid> userRepository,
             IRepository<Ingredient, Guid> ingredientRepository,
+            IRepository<ProductType, Guid> productTypeRepository,
             IWebHostEnvironment webHostEnvironment)
         {
             _productRepository = productRepository;
@@ -35,6 +37,7 @@ namespace RecipeBrowser.WebUI.Controllers
             _recipeRepository = recipeRepository;
             _userRepository = userRepository;
             _ingredientRepository = ingredientRepository;
+            _productTypeRepository = productTypeRepository;
             _webHostEnvironment = webHostEnvironment;
         }
         public async Task<IActionResult> Index(string viewType = ViewType.Table)
@@ -62,6 +65,7 @@ namespace RecipeBrowser.WebUI.Controllers
 
             return View();
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Recipe model, List<Ingredient> ingredients)
@@ -69,6 +73,10 @@ namespace RecipeBrowser.WebUI.Controllers
             if (model.ImagePath == null)
             {
                 model.ImagePath = "/img/recipes/no_photo.jpg";
+            }
+            if (model.CreatorId == Guid.Empty)
+            {
+                model.CreatorId = (await _userRepository.GetAllAsync()).First(u => u.Email == User.Identity.Name).Id;
             }
             if (ModelState.IsValid)
             {
@@ -105,7 +113,11 @@ namespace RecipeBrowser.WebUI.Controllers
                 model.Ingredients = ingredients;
 
                 await _recipeRepository.CreateAsync(model);
-                return RedirectToAction(nameof(Index));
+                if(User.IsInRole("Admin"))
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+                return RedirectToAction(nameof(UserView));
             }
             ViewBag.Types = (await _cookingTypeRepository.GetAllAsync())
                 .Select(p => new SelectListItem() { Text = p.Title, Value = p.Id.ToString() })
@@ -250,6 +262,77 @@ namespace RecipeBrowser.WebUI.Controllers
             {
                 return Json(new { success = false, message = $"Помилка при видаленні запису: {ex.Message}" });
             }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Details(Guid id)
+        {
+            var user = (await _userRepository.GetAllAsync()).First(u => u.Email == User.Identity.Name);
+            var collections = user.RecipeCollecitons.ToList();
+            ViewBag.Collections = collections.Select(rc => new SelectListItem() { Text = rc.Title, Value = rc.Id.ToString()}).ToList();
+            return View(await _recipeRepository.GetAsync(id));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> UserView(List<Guid> difficultyIds, List<Guid> typeIds, List<Guid> bannedProductTypes)
+        {
+            ViewBag.CookingTypes = (await _cookingTypeRepository.GetAllAsync())
+               .Select(p => new SelectListItem() { Text = p.Title, Value = p.Id.ToString() })
+               .ToList();
+            ViewBag.Difficulties = (await _cookingDifficultyRepository.GetAllAsync())
+                .Select(p => new SelectListItem() { Text = p.Title, Value = p.Id.ToString() })
+                .ToList();
+            ViewBag.ProductTypes = (await _productTypeRepository.GetAllAsync())
+                .Select(p => new SelectListItem() { Text = p.Title, Value = p.Id.ToString() })
+                .ToList();
+            var data = await _recipeRepository.GetAllAsync();
+            
+            if (difficultyIds.Count() != 0)
+            {
+                data = data.Where(r => difficultyIds.Contains(r.DifficultyId));
+            }
+            if (typeIds.Count() != 0)
+            {
+                data = data.Where(r => typeIds.Contains(r.TypeId));
+            }
+            if (bannedProductTypes.Count() != 0)
+            {
+                data = data.Where(r => !r.Ingredients.Any(ing => bannedProductTypes.Contains(ing.Product.TypeId)));
+            }
+            
+            data = data.ToList();
+            return View(data);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> UserRecipes(Guid id, List<Guid> difficultyIds, List<Guid> typeIds, List<Guid> bannedProductTypes)
+        {
+            var data = (await _recipeRepository.GetAllAsync()).Where(r => r.CreatorId == id);
+            ViewBag.CookingTypes = (await _cookingTypeRepository.GetAllAsync())
+               .Select(p => new SelectListItem() { Text = p.Title, Value = p.Id.ToString() })
+               .ToList();
+            ViewBag.Difficulties = (await _cookingDifficultyRepository.GetAllAsync())
+                .Select(p => new SelectListItem() { Text = p.Title, Value = p.Id.ToString() })
+                .ToList();
+            ViewBag.ProductTypes = (await _productTypeRepository.GetAllAsync())
+                .Select(p => new SelectListItem() { Text = p.Title, Value = p.Id.ToString() })
+                .ToList();
+
+            if (difficultyIds.Count() != 0)
+            {
+                data = data.Where(r => difficultyIds.Contains(r.DifficultyId));
+            }
+            if (typeIds.Count() != 0)
+            {
+                data = data.Where(r => typeIds.Contains(r.TypeId));
+            }
+            if (bannedProductTypes.Count() != 0)
+            {
+                data = data.Where(r => !r.Ingredients.Any(ing => bannedProductTypes.Contains(ing.Product.TypeId)));
+            }
+
+            data = data.ToList();
+            return View(data);
         }
     }
 }

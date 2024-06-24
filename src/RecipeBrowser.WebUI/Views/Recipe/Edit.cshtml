@@ -142,24 +142,15 @@
                 const item = document.createElement('li');
                 item.className = 'list-group-item d-flex justify-content-between align-items-center';
                 item.innerHTML = `
-                            ${ingredient.amount} ${ingredient.measureText} ${ingredient.productText}
-                            <button type="button" class="btn btn-danger btn-sm" onclick="removeIngredient(${index})">Видалити</button>
-                        `;
+                                                    ${ingredient.amount} ${ingredient.measureText} ${ingredient.productText}
+                                                    <button type="button" class="btn btn-danger btn-sm" onclick="removeIngredient(${index})">Видалити</button>
+                                                    <input type="hidden" name="Ingredients[${index}].Amount" value="${ingredient.amount}" />
+                                                    <input type="hidden" name="Ingredients[${index}].MeasureId" value="${ingredient.measureId}" />
+                                                    <input type="hidden" name="Ingredients[${index}].ProductId" value="${ingredient.productId}" />
+                                                `;
                 list.appendChild(item);
             });
         }
-
-        document.querySelector('form').addEventListener('submit', function (event) {
-            const form = event.target;
-
-            ingredients.forEach((ingredient, index) => {
-                form.insertAdjacentHTML('beforeend', `
-                            <input type="hidden" name="Ingredients[${index}].Amount" value="${ingredient.amount}" />
-                            <input type="hidden" name="Ingredients[${index}].MeasureId" value="${ingredient.measureId}" />
-                            <input type="hidden" name="Ingredients[${index}].ProductId" value="${ingredient.productId}" />
-                        `);
-            });
-        });
 
         // Render the list of ingredients on page load
         document.addEventListener('DOMContentLoaded', function () {

@@ -1,0 +1,233 @@
+﻿@using RecipeBrowser.Core.Entities;
+@using Slugify;
+@model List<RecipeCollection>;
+
+@{
+    ViewData["Title"] = "Ваші колекції";
+    var config = new SlugHelperConfiguration();
+
+    // replace the dictionary completely
+    config.StringReplacements = new()
+            {
+                ["а"] = "a",
+                ["б"] = "b",
+                ["в"] = "v",
+                ["г"] = "h",
+                ["ґ"] = "g",
+                ["д"] = "d",
+                ["е"] = "e",
+                ["є"] = "ye",
+                ["ж"] = "zh",
+                ["з"] = "z",
+                ["и"] = "y",
+                ["і"] = "i",
+                ["ї"] = "yi",
+                ["й"] = "y",
+                ["к"] = "k",
+                ["л"] = "l",
+                ["м"] = "m",
+                ["н"] = "n",
+                ["о"] = "o",
+                ["п"] = "p",
+                ["р"] = "r",
+                ["с"] = "s",
+                ["т"] = "t",
+                ["у"] = "u",
+                ["ф"] = "f",
+                ["х"] = "kh",
+                ["ц"] = "ts",
+                ["ч"] = "ch",
+                ["ш"] = "sh",
+                ["щ"] = "shch",
+                ["ь"] = "",
+                ["ю"] = "yu",
+                ["я"] = "ya",
+                ["А"] = "A",
+                ["Б"] = "B",
+                ["В"] = "V",
+                ["Г"] = "H",
+                ["Ґ"] = "G",
+                ["Д"] = "D",
+                ["Е"] = "E",
+                ["Є"] = "Ye",
+                ["Ж"] = "Zh",
+                ["З"] = "Z",
+                ["И"] = "Y",
+                ["І"] = "I",
+                ["Ї"] = "Yi",
+                ["Й"] = "Y",
+                ["К"] = "K",
+                ["Л"] = "L",
+                ["М"] = "M",
+                ["Н"] = "N",
+                ["О"] = "O",
+                ["П"] = "P",
+                ["Р"] = "R",
+                ["С"] = "S",
+                ["Т"] = "T",
+                ["У"] = "U",
+                ["Ф"] = "F",
+                ["Х"] = "Kh",
+                ["Ц"] = "Ts",
+                ["Ч"] = "Ch",
+                ["Ш"] = "Sh",
+                ["Щ"] = "Shch",
+                ["Ь"] = "",
+                ["Ю"] = "Yu",
+                ["Я"] = "Ya",
+            };
+}
+<div class="container-fluid px-5 py-3">
+    <div>
+
+    </div>
+    <a href="/RecipeCollection/create" class="btn btn-success float-end">Додати</a>
+
+    <h2 class="mt-3 mb-3">@ViewData["Title"]</h2>
+
+    <nav>
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            @for (int i = 0; i < Model.Count(); i++)
+            {
+                var slug = (new SlugHelper(config)).GenerateSlug(Model[i].Title);
+                <button class="nav-link @(i == 0 ? "active" : "")" id="nav-@slug-tab" data-bs-toggle="tab" data-bs-target="#nav-@slug" type="button" role="tab" aria-controls="nav-@slug" aria-selected="@(i == 0 ? "true" : "false")">@(Model[i].Title)</button>
+            }
+        </div>
+    </nav>
+    <div class="tab-content" id="nav-tabContent">
+        @for (int i = 0; i < Model.Count(); i++)
+        {
+            var slug = new SlugHelper(config).GenerateSlug(Model[i].Title);
+            <div class="tab-pane fade @(i == 0 ? "show active" : "")" id="nav-@slug" role="tabpanel" aria-labelledby="nav-@slug-tab">
+                <div>
+                    <div class="d-flex justify-content-end mb-3">
+                        <a href="#" data-id="@Model[i].Id" data-name="@Model[i].Title" class="btn btn-danger btn-remove">Видалити колекцію</a>
+                    </div>
+                    @foreach (var m in Model[i].Recipes)
+                    {
+                        <div class="card p-0 card-container">
+                            <div class="card-header w-100 px-0">
+                                <a href="/Recipe/UserRecipes/@m.Creator.Id" class="px-3">
+                                    Від @m.Creator.FullName
+                                </a>
+                            </div>
+                            <div class="card-body d-flex justify-content-around">
+                                <div>
+                                    <img src="@m.ImagePath" style="max-width: 50vw;" />
+                                </div>
+                                <div class="d-flex flex-column justify-content-evenly mx-2">
+                                    <div class="d-flex gap-2 border-bottom border-3">
+                                        <i class="bi bi-alarm"></i>
+                                        <p>Час приготування: @m.CookDuration хв.</p>
+                                    </div>
+                                    <div class="d-flex gap-2 border-bottom border-3 mt-3">
+                                        <i class="bi bi-award"></i>
+                                        <p>Складність: @m.Difficulty.Title</p>
+                                    </div>
+                                    <div class="d-flex gap-2 border-bottom border-3 mt-3">
+                                        <i class="bi bi-book"></i>
+                                        <p>Спосіб приготування: @m.Type.Title</p>
+                                    </div>
+                                    <div class="d-flex gap-2 mt-3">
+                                        <i class="bi bi-star-half"></i>
+                                        <p>Середня оцінка: @(m.Reviews.Any() ? Math.Round(m.Reviews.Average(r => r.Rating), 1) : 0)</p>
+                                    </div>
+                                    <div class="d-flex gap-2 mt-3">
+                                        <a href="/Recipe/details/@m.Id" class="btn btn-info m-auto d-flex h-100 align-items-center justify-content-center">Детальніше</a>
+                                        <div>
+                                            <form id="remove-from-collection-form-@m.Id" asp-controller="RecipeCollection" asp-action="DeleteRecipeFromCollection">
+                                                @Html.AntiForgeryToken()
+                                                <input type="hidden" name="recipeId" value="@m.Id" />
+                                                <input type="hidden" name="collectionId" value="@Model[i].Id" />
+                                                <button type="submit" class="btn btn-danger">Видалити з колекції</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<!--Modal for delete-->
+<div class="modal" tabindex="-1" id="modalQuestion">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Видалення</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Чи справді Ви бажаєте видалити колекцію <strong class="selectedName">-</strong>?</p>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn-primary btn btn-remove-approve w-25">Так</a>
+                <button type="button" class="btn btn-secondary w-25" data-bs-dismiss="modal">Скасувати</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(function () {
+            let selected_id = "";
+            let selected_name = "";
+            let cardContainer = null;
+
+            $(".btn-remove").click(function () {
+                cardContainer = $(this).closest(".tab-pane");
+                selected_id = $(this).data("id");
+                selected_name = $(this).data("name");
+                $(".selectedName").text(selected_name);
+                $("#modalQuestion").modal("show");
+            });
+
+            $(".btn-remove-approve").click(function () {
+                $.ajax({
+                    url: '/RecipeCollection/Delete',
+                    type: 'DELETE',
+                    data: { id: selected_id },
+                    success: function (result) {
+                        if (result.success) {
+                            cardContainer.remove();
+                        } else {
+                            alert(result.message);
+                        }
+                        $("#modalQuestion").modal("hide");
+                        location.reload();
+                    },
+                    error: function () {
+                        alert('Помилка при видаленні колекції.');
+                        $("#modalQuestion").modal("hide");
+                    }
+                });
+            });
+
+            $("[id^=remove-from-collection-form]").submit(function (event) {
+                event.preventDefault();
+                var form = $(this);
+                $.ajax({
+                    type: form.attr('method'),
+                    url: form.attr('action'),
+                    data: form.serialize(),
+                    success: function (response) {
+                        if (response.success) {
+                            alert(response.message);
+                            location.reload();
+                        } else {
+                            alert(response.message);
+                        }
+                    },
+                    error: function (response) {
+                        alert("An error occurred while adding the recipe to the collection.");
+                    }
+                });
+            });
+        });
+    </script>
+}

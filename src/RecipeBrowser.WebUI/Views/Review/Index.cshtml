@@ -16,6 +16,7 @@
                 <th>Автор</th>
                 <th>Рецепт</th>
                 <th>Рейтинг</th>
+                <th>Дата створення</th>
                 <th>Дії</th>
             </tr>
         </thead>
@@ -33,6 +34,9 @@
                         <div class="ratingDiv">
                             <span class="my-rating-4" data-rating="@m.Rating.ToString().Replace(',', '.')"></span>
                         </div>
+                    </td>
+                    <td>
+                        @m.CreationTime?.ToString("dd.MM.yyyy HH:mm")
                     </td>
                     <td class="text-center d-flex justify-content-evenly">
                         <a href="/Review/edit/@m.Id" class="btn btn-warning">Редагувати</a>

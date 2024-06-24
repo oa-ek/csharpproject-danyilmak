@@ -1,0 +1,172 @@
+﻿@using RecipeBrowser.Core.Entities
+@using RecipeBrowser.WebUI.Helpers
+@model List<Recipe>
+
+@{
+    ViewData["Title"] = "Рецепти";
+    var productTypes = ViewBag.ProductTypes as List<SelectListItem>;
+    var cookingTypes = ViewBag.CookingTypes as List<SelectListItem>;
+    var difficulties = ViewBag.Difficulties as List<SelectListItem>;
+}
+<div class="container-fluid px-5 py-3">
+    <div>
+        <form asp-controller="Recipe" asp-action="UserView" method="get">
+            @Html.AntiForgeryToken()
+            <div class="d-flex justify-content-around">
+                <div class="d-flex flex-column justify-content-around">
+                    <div class="d-flex justify-content-around gap-3">
+                        <div class="mb-2">
+                            <label for="difficulties">Небажані типи продуктів:</label>
+                            <select class="form-control" id="bannedProductTypes" name="bannedProductTypes" multiple>
+                                @foreach (var productType in productTypes)
+                                {
+                                    <!option value="@productType.Value" >@productType.Text</!option>
+                                }
+                            </select>
+                        </div>
+                        <div class="mb-2">
+                            <label for="difficulties">Рівні складності:</label>
+                            <select class="form-control" id="difficultyIds" name="difficultyIds" multiple>
+                                @foreach (var diff in difficulties)
+                                {
+                                    <!option value="@diff.Value" >@diff.Text</!option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-around align-items-center">
+                        <div>
+                            <label for="difficulties">Способи приготування:</label>
+                            <select class="form-control" id="typeIds" name="typeIds" multiple>
+                                @foreach (var cookType in cookingTypes)
+                                {
+                                    <!option value="@cookType.Value" >@cookType.Text</!option>
+                                }
+                            </select>
+                        </div>
+                        <div class="d-flex align-items-center gap-5 justify-content-evenly">
+                            <button type="submit" class="btn btn-info">Фільтрувати</button>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    @if (User.IsInRole("Admin") || User.IsInRole("User"))
+                    {
+                        <a href="/Recipe/create" class="btn btn-success float-end h-100 d-flex align-items-center">Додати свій рецепт</a>
+                    }
+                </div>
+            </div>
+            
+        </form>
+    </div>
+    
+    <h2 class="mt-3 mb-3">@ViewData["Title"]</h2>
+
+    <div class="row d-flex flex-wrap justify-content-evenly gap-2">
+        @foreach (var m in Model)
+        {
+            <div class="card p-0 card-container">
+                <div class="card-header w-100 px-0 d-flex gap-2">
+                    <p class="px-4">@m.Title </p>
+                    <a href="/Recipe/UserRecipes/@m.Creator.Id" class="px-3">
+                        від @m.Creator.FullName
+                    </a>
+                </div>
+                <div class="card-body d-flex justify-content-around">
+                    <div>
+                        <img src="@m.ImagePath" style="max-width: 50vw;" />
+                    </div>
+                    <div class="d-flex flex-column justify-content-evenly mx-2">
+                        <div class="d-flex gap-2 border-bottom border-3">
+                            <i class="bi bi-alarm"></i>
+                            <p>Час приготування: @m.CookDuration хв.</p>
+                        </div>
+                        <div class="d-flex gap-2 border-bottom border-3 mt-3">
+                            <i class="bi bi-award"></i>
+                            <p>Складність: @m.Difficulty.Title</p>
+                        </div>
+                        <div class="d-flex gap-2 border-bottom border-3 mt-3">
+                            <i class="bi bi-book"></i>
+                            <p>Спосіб приготування: @m.Type.Title</p>
+                        </div>
+                        <div class="d-flex gap-2 mt-3">
+                            <i class="bi bi-star-half"></i>
+                            <p>Середня оцінка: @(m.Reviews.Any() ? Math.Round(m.Reviews.Average(r => r.Rating), 1) : 0)</p>
+                        </div>
+                        <div class="d-flex gap-2 mt-3">
+                            <a href="/Recipe/details/@m.Id" class="btn btn-info m-auto">Детальніше</a>
+                            @if(User.IsInRole("Admin") || m.Creator.Email == User.Identity.Name)
+                            {
+                                <a href="#" data-id="@m.Id" data-name="@m.Title" class="btn btn-danger btn-remove">Видалити</a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+@if (User.IsInRole("Admin") || User.IsInRole("User"))
+{
+    <!-- Modal for delete -->
+    <div class="modal" tabindex="-1" id="modalQuestion">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Видалення</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Чи справді Ви бажаєте видалити рецепт <strong class="selectedName">-</strong>?</p>
+                </div>
+                <div class="modal-footer">
+                    <a href="#" class="btn-primary btn btn-remove-approve w-25">Так</a>
+                    <button type="button" class="btn btn-secondary w-25" data-bs-dismiss="modal">Скасувати</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<link rel="stylesheet" href="~/select2/css/select2.min.css" />
+@section Scripts {
+    <script src="~/select2/js/select2.full.min.js"></script>
+    <script>
+        $(function () {
+            $("#difficultyIds").select2();
+            $("#typeIds").select2();
+            $("#bannedProductTypes").select2();
+
+            let selected_id = "";
+            let selected_name = "";
+            let cardContainer = null;
+
+            $(".btn-remove").click(function () {
+                cardContainer = $(this).closest(".card-container");
+                selected_id = $(this).attr("data-id");
+                selected_name = $(this).attr("data-name");
+                $(".selectedName").html(selected_name);
+                $("#modalQuestion").modal("show");
+            });
+
+            $(".btn-remove-approve").click(function () {
+                $.ajax({
+                    url: '/Recipe/delete',
+                    type: 'DELETE',
+                    data: { id: selected_id },
+                    success: function (result) {
+                        if (result.success) {
+                            cardContainer.fadeOut();
+                        } else {
+                            alert(result.message);
+                        }
+                        $("#modalQuestion").modal("hide");
+                    },
+                    error: function () {
+                        alert('Помилка при видаленні запису.');
+                        $("#modalQuestion").modal("hide");
+                    }
+                });
+            });
+        });
+    </script>
+}
