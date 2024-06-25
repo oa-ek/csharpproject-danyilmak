@@ -5,6 +5,7 @@ using RecipeBrowser.Core.Entities;
 using RecipeBrowser.Repos.Common;
 using RecipeBrowser.Repos;
 using System;
+using RecipeBrowser.WebUI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +26,9 @@ builder.Services.AddDefaultIdentity<User>(
     }).AddRoles<IdentityRole<Guid>>()
     .AddEntityFrameworkStores<ProjectContext>();
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddHttpClient<NutritionService>();
+builder.Services.AddHttpClient<TranslationService>();
 
 builder.Services.AddRepositories();
 

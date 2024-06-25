@@ -42,7 +42,16 @@
         <ul>
             @foreach (var ing in Model.Ingredients)
             {
-                <li>@ing.Product.Title: @ing.Amount @ing.Measure.Title</li>
+                <li class="my-2">
+                    @ing.Product.Title: @ing.Amount @ing.Measure.Title
+                    <button class="btn btn-sm btn-info ms-2" onclick="getNutrition('@ing.Product.Title')">Інформація про харчову цінність (на 100гр продукту)</button>
+                    <div id="@($"nutrition-{ing.Product.Title.Replace(" ", "-")}")" class="nutrition-info mt-2" style="display: none;">
+                        <p><strong>Білки:</strong> <span id="protein-@ing.Product.Title"></span> г</p>
+                        <p><strong>Жири:</strong> <span id="fat-@ing.Product.Title"></span> г</p>
+                        <p><strong>Вуглеводи:</strong> <span id="carbs-@ing.Product.Title"></span> г</p>
+                        <p><strong>Калорії:</strong> <span id="calories-@ing.Product.Title"></span> ккал</p>
+                    </div>
+                </li>
             }
         </ul>
     </div>
@@ -181,6 +190,22 @@
                         }
                     });
                 });
+        });
+        function getNutrition(productName) {
+            $.ajax({
+                type: 'GET',
+                url: '/api/nutrition/' + encodeURIComponent(productName),
+                success: function (data) {
+                    $('#protein-' + productName).text(data.protein);
+                    $('#fat-' + productName).text(data.total_fats);
+                    $('#carbs-' + productName).text(data.carbohydrates);
+                    $('#calories-' + productName).text(data.calories);
+                    $('#nutrition-' + productName.replace(" ", "-")).slideDown();
+                },
+                error: function () {
+                    alert('Failed to fetch nutrition information.');
+                }
             });
+        }
     </script>
 }
