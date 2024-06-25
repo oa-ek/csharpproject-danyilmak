@@ -99,7 +99,7 @@
     <script>
         const ingredients = @Html.Raw(Json.Serialize(Model.Ingredients.Select(i => new
             {
-                amount = i.Amount,
+                amount = i.Amount.ToString().Replace('.', ','),
                 measureId = i.MeasureId,
                 measureText = measures.FirstOrDefault(m => m.Value == i.MeasureId.ToString())?.Text,
                 productId = i.ProductId,
@@ -107,11 +107,14 @@
             })));
 
         function addIngredient() {
-            const amount = document.getElementById('IngredientAmount').value;
+            let amount = document.getElementById('IngredientAmount').value;
             const measure = document.getElementById('IngredientMeasure');
             const product = document.getElementById('IngredientProduct');
             const measureText = measure.options[measure.selectedIndex].text;
             const productText = product.options[product.selectedIndex].text;
+
+            // Replace decimal separator based on the culture setting of the server
+            amount = amount.replace('.', ',');
 
             if (amount && measure.value !== '0' && product.value !== '0') {
                 const ingredient = {

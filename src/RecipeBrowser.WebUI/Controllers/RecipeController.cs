@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using RecipeBrowser.Core.Entities;
 using RecipeBrowser.Repos.Common;
 using RecipeBrowser.WebUI.Helpers;
+using RecipeBrowser.WebUI.Models;
 
 namespace RecipeBrowser.WebUI.Controllers
 {
@@ -68,8 +69,29 @@ namespace RecipeBrowser.WebUI.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Recipe model, List<Ingredient> ingredients)
+        public async Task<IActionResult> Create(Recipe model, List<IngredientModel> ingredients)
         {
+            var selectedIngredients = new List<Ingredient>();
+            foreach (var ing in ingredients)
+            {
+                // Replace the decimal separator based on culture, if necessary
+                ing.Amount = ing.Amount.Replace('.', ',');
+
+                if (float.TryParse(ing.Amount, out float amount))
+                {
+                    selectedIngredients.Add(new Ingredient
+                    {
+                        MeasureId = ing.MeasureId,
+                        ProductId = ing.ProductId,
+                        Amount = amount
+                    });
+                }
+                else
+                {
+                    ModelState.AddModelError($"Ingredients[{ingredients.IndexOf(ing)}].Amount", "Invalid amount format.");
+                }
+            }
+
             if (model.ImagePath == null)
             {
                 model.ImagePath = "/img/recipes/no_photo.jpg";
@@ -98,27 +120,29 @@ namespace RecipeBrowser.WebUI.Controllers
                 }
 
                 var existingIngredients = await _ingredientRepository.GetAllAsync();
-                for (int i = 0; i < ingredients.Count(); i++)
+                for (int i = 0; i < selectedIngredients.Count(); i++)
                 {
-                    if (existingIngredients.Any(ing => ing.Amount == ingredients[i].Amount
-                        && ing.MeasureId == ingredients[i].MeasureId
-                        && ing.ProductId == ingredients[i].ProductId))
+                    if (existingIngredients.Any(ing => ing.Amount == selectedIngredients[i].Amount
+                        && ing.MeasureId == selectedIngredients[i].MeasureId
+                        && ing.ProductId == selectedIngredients[i].ProductId))
                     {
-                        ingredients[i] = existingIngredients.First(ing => ing.Amount == ingredients[i].Amount
-                            && ing.MeasureId == ingredients[i].MeasureId
-                            && ing.ProductId == ingredients[i].ProductId);
+                        selectedIngredients[i] = existingIngredients.First(ing => ing.Amount == selectedIngredients[i].Amount
+                            && ing.MeasureId == selectedIngredients[i].MeasureId
+                            && ing.ProductId == selectedIngredients[i].ProductId);
                     }
                 }
 
-                model.Ingredients = ingredients;
+                model.Ingredients = selectedIngredients;
 
                 await _recipeRepository.CreateAsync(model);
-                if(User.IsInRole("Admin"))
+                if (User.IsInRole("Admin"))
                 {
                     return RedirectToAction(nameof(Index));
                 }
                 return RedirectToAction(nameof(UserView));
             }
+
+            // Populate ViewBags again if ModelState is invalid
             ViewBag.Types = (await _cookingTypeRepository.GetAllAsync())
                 .Select(p => new SelectListItem() { Text = p.Title, Value = p.Id.ToString() })
                 .ToList();
@@ -166,8 +190,29 @@ namespace RecipeBrowser.WebUI.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Recipe updatedModel, List<Ingredient> ingredients)
+        public async Task<IActionResult> Edit(Recipe updatedModel, List<IngredientModel> ingredients)
         {
+            var selectedIngredients = new List<Ingredient>();
+            foreach (var ing in ingredients)
+            {
+                // Replace the decimal separator based on culture, if necessary
+                ing.Amount = ing.Amount.Replace('.', ',');
+
+                if (float.TryParse(ing.Amount, out float amount))
+                {
+                    selectedIngredients.Add(new Ingredient
+                    {
+                        MeasureId = ing.MeasureId,
+                        ProductId = ing.ProductId,
+                        Amount = amount
+                    });
+                }
+                else
+                {
+                    ModelState.AddModelError($"Ingredients[{ingredients.IndexOf(ing)}].Amount", "Invalid amount format.");
+                }
+            }
+
             if (updatedModel.ImagePath == null)
             {
                 updatedModel.ImagePath = "/img/recipes/no_photo.jpg";
@@ -197,7 +242,7 @@ namespace RecipeBrowser.WebUI.Controllers
                 // Remove existing ingredients relationships
                 currentRecipe.Ingredients.Clear();
 
-                foreach (var ingredient in ingredients)
+                foreach (var ingredient in selectedIngredients)
                 {
                     var existingIngredient = existingIngredients.FirstOrDefault(ei =>
                         ei.ProductId == ingredient.ProductId &&
